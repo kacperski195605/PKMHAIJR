@@ -1,13 +1,13 @@
 package src;
 
 /**
- * Hello world!
+ * hello world!
  *
  */
-public class App 
+public class app
 {
-    public static void main( String[] args )
+    public static void main( string[] args )
     {
-        System.out.println( "Hello World!" );
+        system.out.println( "hello world!" );
     }
 }
