@@ -8,4 +8,8 @@ public class Main {
         //TODO remove it.
 
     }
+
+    public int myMethod() {
+        return 0;
+    }
 }
