@@ -1,6 +1,8 @@
-package pkmhaijr.model;
+package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
+import pkmhaijr.model.enums.Genre;
+import pkmhaijr.model.enums.ProductType;
 
 import javax.persistence.*;
 import javax.validation.constraints.Min;

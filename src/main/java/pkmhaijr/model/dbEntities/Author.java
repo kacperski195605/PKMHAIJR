@@ -1,4 +1,4 @@
-package pkmhaijr.model;
+package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
 

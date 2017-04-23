@@ -1,7 +1,7 @@
 package pkmhaijr.managers;
 
 
-import pkmhaijr.model.User;
+import pkmhaijr.model.dbEntities.User;
 
 /**
  * Created by Asasello on 19-Apr-17.

@@ -6,10 +6,8 @@ package pkmhaijr;
 
 import mvp.AppContract;
 import mvp.AppPresenter;
-import pkmhaijr.model.ErrorType;
-import pkmhaijr.model.User;
-
-import java.util.logging.Logger;
+import pkmhaijr.model.enums.ErrorType;
+import pkmhaijr.model.dbEntities.User;
 
 /**
  * Store instance

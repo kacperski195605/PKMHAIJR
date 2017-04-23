@@ -1,8 +1,8 @@
 package mvp;
 
 import pkmhaijr.managers.DatabaseFacade;
-import pkmhaijr.model.ErrorType;
-import pkmhaijr.model.User;
+import pkmhaijr.model.enums.ErrorType;
+import pkmhaijr.model.dbEntities.User;
 
 /**
  * Created by Asasello on 22-Apr-17.
