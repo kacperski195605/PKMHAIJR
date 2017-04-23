@@ -23,7 +23,6 @@ public class DatabaseFacade {
         return new User();
     }
 
-    //Field SortingType in SearchContext should be ignored in this method
     public ArrayList<Product> getProducts(SearchContext searchContext) {
         //TODO: Logic for filter products
         return new ArrayList<Product>(){{
