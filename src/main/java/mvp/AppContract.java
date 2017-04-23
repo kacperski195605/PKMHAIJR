@@ -1,17 +1,16 @@
 package mvp;
 
-import pkmhaijr.App;
-import pkmhaijr.model.ErrorType;
-import pkmhaijr.model.FilterType;
 
-import java.util.ArrayList;
+import pkmhaijr.model.dbEntities.User;
+import pkmhaijr.model.enums.ErrorType;
+import pkmhaijr.model.enums.FilterType;
 
 /**
  * Created by Asasello on 22-Apr-17.
  */
 public interface AppContract {
     public interface View{
-        void setCurrentUser(App.User user);
+        void setCurrentUser(User user);
         void error(ErrorType errorType);
 
     }

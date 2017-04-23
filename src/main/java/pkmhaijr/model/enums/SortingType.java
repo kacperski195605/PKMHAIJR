@@ -1,4 +1,4 @@
-package pkmhaijr.model;
+package pkmhaijr.model.enums;
 
 /**
  * Created by Asasello on 22-Apr-17.

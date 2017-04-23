@@ -6,9 +6,8 @@ package pkmhaijr;
 
 import mvp.AppContract;
 import mvp.AppPresenter;
-import pkmhaijr.model.ErrorType;
-
-import java.util.logging.Logger;
+import pkmhaijr.model.enums.ErrorType;
+import pkmhaijr.model.dbEntities.User;
 
 /**
  * Store instance
@@ -16,10 +15,6 @@ import java.util.logging.Logger;
 public class App implements AppContract.View {
     private AppContract.Presenter mPresenter;
     private User currentUser;
-
-    //TODO: to remove
-    public static class User {
-    }
 
     private App() {init();}
 
