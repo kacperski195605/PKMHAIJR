@@ -48,7 +48,7 @@ public class ProductsSortingUtils {
     private static ArrayList<Product> getSortedListByPrice(ArrayList<Product> productsList,boolean ascending){
         return ascending?productsList.stream().sorted(Comparator.comparing(Product::getPrice)).collect(Collectors.toCollection(ArrayList::new)):productsList.stream().sorted(Comparator.comparing(Product::getPrice).reversed()).collect(Collectors.toCollection(ArrayList::new));
     }
-    
+
     private static ArrayList<Product> getSortedListByAuthor(ArrayList<Product> productsList,boolean ascending){
         return ascending?productsList.stream().sorted(Comparator.comparing(product -> product.getAuthor().getName())).collect(Collectors.toCollection(ArrayList::new)):productsList.stream().sorted(Comparator.comparing(product -> product.getAuthor().getName())).collect(Collectors.toCollection(ArrayList::new));
     }
