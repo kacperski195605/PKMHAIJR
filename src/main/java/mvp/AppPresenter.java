@@ -1,9 +1,11 @@
 package mvp;
 
 import pkmhaijr.managers.DatabaseFacade;
+import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.enums.ErrorType;
 import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.model.enums.FilterType;
+import pkmhaijr.model.enums.Genre;
 
 /**
  * Created by Asasello on 22-Apr-17.
@@ -29,7 +31,7 @@ public class AppPresenter implements AppContract.Presenter {
     }
 
     @Override
-    public void getProducts(FilterType type) {
-        
+    public void getProducts(SearchContext searchContext) {
+         view.showProducts(DatabaseFacade.getInstance().getProducts(searchContext));
     }
 }
