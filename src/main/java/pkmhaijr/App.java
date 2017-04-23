@@ -10,7 +10,7 @@ import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.enums.ErrorType;
 import pkmhaijr.model.dbEntities.User;
-import pkmhaijr.model.enums.Genre;
+import pkmhaijr.util.ProductsSortingUtils;
 
 import java.util.ArrayList;
 
@@ -45,14 +45,15 @@ public class App implements AppContract.View {
     }
 
     @Override
+    public void showProducts(ArrayList<Product> productsList) {
+        //TODO: do something with products list :) ASK HOW TO TEST IT (WE DO NOT SAVE PRODUCT LIST HERE)
+        ProductsSortingUtils.getSortedList(productsList, searchContext.getSortingType());
+    }
+
+    @Override
     public void error(ErrorType errorType) {
         //TODO: add logic to error
         System.err.println(errorType);
     }
-
-    @Override
-    public void showProducts(ArrayList<Product> productsList) {
-    }
-
 
 }
