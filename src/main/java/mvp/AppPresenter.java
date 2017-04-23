@@ -3,6 +3,7 @@ package mvp;
 import pkmhaijr.managers.DatabaseFacade;
 import pkmhaijr.model.enums.ErrorType;
 import pkmhaijr.model.dbEntities.User;
+import pkmhaijr.model.enums.FilterType;
 
 /**
  * Created by Asasello on 22-Apr-17.
@@ -25,5 +26,10 @@ public class AppPresenter implements AppContract.Presenter {
         User temp = DatabaseFacade.getInstance().getUser();
         if (temp == null) view.error(ErrorType.USER_NOT_FOUND);
         else view.setCurrentUser(temp);
+    }
+
+    @Override
+    public void getProducts(FilterType type) {
+        
     }
 }
