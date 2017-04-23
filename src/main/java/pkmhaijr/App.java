@@ -7,6 +7,7 @@ package pkmhaijr;
 import mvp.AppContract;
 import mvp.AppPresenter;
 import pkmhaijr.model.ErrorType;
+import pkmhaijr.model.User;
 
 import java.util.logging.Logger;
 
@@ -16,10 +17,6 @@ import java.util.logging.Logger;
 public class App implements AppContract.View {
     private AppContract.Presenter mPresenter;
     private User currentUser;
-
-    //TODO: to remove
-    public static class User {
-    }
 
     private App() {init();}
 

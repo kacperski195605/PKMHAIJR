@@ -1,8 +1,8 @@
 package mvp;
 
-import pkmhaijr.App.User;
 import pkmhaijr.managers.DatabaseFacade;
 import pkmhaijr.model.ErrorType;
+import pkmhaijr.model.User;
 
 /**
  * Created by Asasello on 22-Apr-17.

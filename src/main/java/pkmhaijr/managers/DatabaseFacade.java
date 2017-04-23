@@ -1,6 +1,7 @@
 package pkmhaijr.managers;
 
-import pkmhaijr.App.User;
+
+import pkmhaijr.model.User;
 
 /**
  * Created by Asasello on 19-Apr-17.
