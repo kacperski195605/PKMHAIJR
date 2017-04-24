@@ -1,9 +1,9 @@
 package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -19,32 +19,32 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 80)
     private String street;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 80)
     private String country;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 80)
     private String city;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 10)
     private String houseNumber;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 10)
     private String apartmentNumber;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 10)
     private String postalCode;

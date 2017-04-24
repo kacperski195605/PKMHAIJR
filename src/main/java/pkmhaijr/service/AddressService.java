@@ -52,4 +52,15 @@ public class AddressService {
             throw new IllegalArgumentException("There is no address with id " + newAddress.getId() + " in database");
         }
     }
+
+    public void deleteAllAddresses() {
+        log.info("Deleting all addresses");
+        addressRepository.deleteAll();
+    }
+
+    public Integer countAddresses() {
+        log.info("Returning number of addresses");
+        return Math.toIntExact(addressRepository.count());
+    }
+
 }

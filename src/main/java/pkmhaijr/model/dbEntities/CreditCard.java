@@ -1,9 +1,9 @@
 package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
-import lombok.NonNull;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 /**
@@ -19,12 +19,12 @@ public class CreditCard {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 20)
     private String number;
 
-    @NonNull
+    @NotNull
     @Column
     @Size(min = 1, max = 80)
     private String owner;
