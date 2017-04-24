@@ -1,12 +1,12 @@
-package pkmhaijr.repositories;
+package pkmhaijr.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pkmhaijr.model.dbEntities.Address;
+import pkmhaijr.model.dbEntities.Product;
 
 /**
  * Created by patry on 23/04/17.
  */
 @Repository
-public interface AddressRepository extends CrudRepository<Address, Integer> {
+public interface ProductRepository extends CrudRepository<Product, Integer> {
 }

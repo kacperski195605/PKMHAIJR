@@ -1,4 +1,4 @@
-package pkmhaijr.services;
+package pkmhaijr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;

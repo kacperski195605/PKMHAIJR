@@ -1,12 +1,12 @@
-package pkmhaijr.repositories;
+package pkmhaijr.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import pkmhaijr.model.dbEntities.CreditCard;
+import pkmhaijr.model.dbEntities.Address;
 
 /**
  * Created by patry on 23/04/17.
  */
 @Repository
-public interface CreditCardRepository extends CrudRepository<CreditCard, Integer> {
+public interface AddressRepository extends CrudRepository<Address, Integer> {
 }

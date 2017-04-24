@@ -1,11 +1,9 @@
 package mvp;
 
-import pkmhaijr.managers.DatabaseFacade;
+import pkmhaijr.manager.DatabaseFacade;
 import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.enums.ErrorType;
 import pkmhaijr.model.dbEntities.User;
-import pkmhaijr.model.enums.FilterType;
-import pkmhaijr.model.enums.Genre;
 
 /**
  * Created by Asasello on 22-Apr-17.

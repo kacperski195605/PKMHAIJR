@@ -1,10 +1,10 @@
-package pkmhaijr.services;
+package pkmhaijr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import pkmhaijr.model.dbEntities.Address;
-import pkmhaijr.repositories.AddressRepository;
+import pkmhaijr.repository.AddressRepository;
 
 import javax.inject.Inject;
 import java.util.List;

@@ -1,10 +1,10 @@
-package pkmhaijr.services;
+package pkmhaijr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import pkmhaijr.model.dbEntities.CreditCard;
-import pkmhaijr.repositories.CreditCardRepository;
+import pkmhaijr.repository.CreditCardRepository;
 
 import javax.inject.Inject;
 import java.util.List;
