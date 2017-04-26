@@ -4,8 +4,8 @@ package pkmhaijr;
  * Created by Asasello on 22-Apr-17.
  */
 
-import mvp.AppContract;
-import mvp.AppPresenter;
+import pkmhaijr.mvp.AppContract;
+import pkmhaijr.mvp.AppPresenter;
 import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.enums.ErrorType;
