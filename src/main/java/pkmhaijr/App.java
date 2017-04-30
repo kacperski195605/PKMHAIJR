@@ -46,8 +46,9 @@ public class App implements AppContract.View {
 
     @Override
     public void showProducts(ArrayList<Product> productsList) {
-        //TODO: do something with products list :) ASK HOW TO TEST IT (WE DO NOT SAVE PRODUCT LIST HERE)
+        //TODO: do something with products list
         ProductsSortingUtils.getSortedList(productsList, searchContext.getSortingType());
+
     }
 
     @Override
