@@ -25,12 +25,12 @@ public class FacebookController {
     private Facebook facebook;
     @Autowired
     private ConnectionRepository connectionRepository;
-
-    @Inject
-    public FacebookController(Facebook facebook, ConnectionRepository connectionRepository) {
-        this.facebook = facebook;
-        this.connectionRepository = connectionRepository;
-    }
+//
+//    @Inject
+//    public FacebookController(Facebook facebook, ConnectionRepository connectionRepository) {
+//        this.facebook = facebook;
+//        this.connectionRepository = connectionRepository;
+//    }
 
     @GetMapping
     public String helloFacebook(Model model) {
