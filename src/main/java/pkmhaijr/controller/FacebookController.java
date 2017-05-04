@@ -28,7 +28,7 @@ public class FacebookController {
         this.connectionRepository = connectionRepository;
     }
 
-    //    @GetMapping
+    @GetMapping
     public String helloFacebook(Model model) {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
             return "redirect:/connect/facebook";
