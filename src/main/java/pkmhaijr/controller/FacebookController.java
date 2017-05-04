@@ -1,5 +1,6 @@
 package pkmhaijr.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.PagedList;
@@ -20,9 +21,12 @@ import javax.inject.Inject;
 @RequestMapping("/facebook")
 public class FacebookController {
 
+    @Autowired
     private Facebook facebook;
+    @Autowired
     private ConnectionRepository connectionRepository;
 
+    @Inject
     public FacebookController(Facebook facebook, ConnectionRepository connectionRepository) {
         this.facebook = facebook;
         this.connectionRepository = connectionRepository;
