@@ -34,7 +34,6 @@ public class FacebookController {
 //    }
 
     @GetMapping
-    @Bean
     public String helloFacebook(Model model) {
         if (connectionRepository.findPrimaryConnection(Facebook.class) == null) {
             return "redirect:/connect/facebook";
