@@ -13,5 +13,4 @@ spring:
     facebook:
       appId: 1684275648541780
       appSecret: 5fa95f367dc7a3fe88fa8b5e7f6c430a
-    auto-connection-views: true
 
