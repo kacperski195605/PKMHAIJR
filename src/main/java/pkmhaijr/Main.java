@@ -14,9 +14,6 @@ import java.util.Calendar;
  */
 
 @SpringBootApplication
-@ComponentScan({"pkmhaijr"})
-@EntityScan("pkmhaijr")
-@EnableJpaRepositories("pkmhaijr")
 public class Main {
 
     public static void main(String[] args) {
