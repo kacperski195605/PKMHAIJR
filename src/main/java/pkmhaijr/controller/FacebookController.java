@@ -2,6 +2,8 @@ package pkmhaijr.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.social.connect.ConnectionRepository;
 import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.facebook.api.PagedList;
@@ -22,16 +24,21 @@ import javax.inject.Inject;
 @RequestMapping("/facebook")
 public class FacebookController {
 
-    @Autowired
     private Facebook facebook;
     @Autowired
     private ConnectionRepository connectionRepository;
-//
+
+    //
 //    @Inject
 //    public FacebookController(Facebook facebook, ConnectionRepository connectionRepository) {
 //        this.facebook = facebook;
 //        this.connectionRepository = connectionRepository;
 //    }
+    @Bean
+    @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
+    public void facebook() {
+        facebook = connectionRepository.getPrimaryConnection(Facebook.class).getApi();
+    }
 
     @GetMapping
     public String helloFacebook(Model model) {
