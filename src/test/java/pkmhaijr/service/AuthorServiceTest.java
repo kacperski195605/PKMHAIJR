@@ -33,17 +33,14 @@ public class AuthorServiceTest {
     public void setUp() {
         author1 = new Author();
         author1.setName("Name1");
-        author1.setId(1);
         author1.setDescription("Description1");
 
         author2 = new Author();
         author2.setName("Name2");
-        author2.setId(2);
         author2.setDescription("Description2");
 
         author3 = new Author();
         author3.setName("Name3");
-        author3.setId(3);
         author3.setDescription("Description3");
     }
 
