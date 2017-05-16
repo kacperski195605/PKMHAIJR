@@ -52,4 +52,14 @@ public class AuthorService {
             throw new IllegalArgumentException("There is no author with id " + newAuthor.getId() + " in database");
         }
     }
+
+    public void deleteAllAuthors() {
+        log.info("Deleting all authors");
+        authorRepository.deleteAll();
+    }
+
+    public Integer countAuthors() {
+        log.info("Returning number of authors");
+        return Math.toIntExact(authorRepository.count());
+    }
 }

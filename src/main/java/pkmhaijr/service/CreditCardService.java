@@ -52,4 +52,14 @@ public class CreditCardService {
             throw new IllegalArgumentException("There is o credit card with i " + newCreditCard.getId() + " in the database");
         }
     }
+
+    public void deleteAllCreditCards() {
+        log.info("Deleting all credit cards");
+        creditCardRepository.deleteAll();
+    }
+
+    public Integer countCreditCards() {
+        log.info("Returning number of credit cards");
+        return Math.toIntExact(creditCardRepository.count());
+    }
 }
