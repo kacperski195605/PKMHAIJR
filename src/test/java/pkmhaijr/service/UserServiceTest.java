@@ -8,9 +8,13 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pkmhaijr.model.dbEntities.Address;
+import pkmhaijr.model.dbEntities.CreditCard;
 import pkmhaijr.model.dbEntities.User;
 
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import static org.junit.Assert.*;
 
@@ -23,28 +27,103 @@ import static org.junit.Assert.*;
 @Log4j2
 public class UserServiceTest {
     @Autowired UserService userService;
+    @Autowired AddressService addressService;
+    @Autowired CreditCardService creditCardService;
 
     private User user1;
     private User user2;
     private User user3;
 
+    private Address address1;
+    private Address address2;
+    private Address address3;
+
+    private CreditCard card1;
+    private  CreditCard card2;
+    private  CreditCard card3;
+
     @Before
     public void setUp(){
+
+        address1 = new Address();
+        address1.setStreet("Street1");
+        address1.setPostalCode("Code1");
+        address1.setHouseNumber("1");
+        address1.setCountry("Country1");
+        address1.setCity("City1");
+        address1.setApartmentNumber("1");
+
+        address2 = new Address();
+        address2.setStreet("Street2");
+        address2.setPostalCode("Code2");
+        address2.setHouseNumber("2");
+        address2.setCountry("Country2");
+        address2.setCity("City2");
+        address2.setApartmentNumber("2");
+
+        address3 = new Address();
+        address3.setStreet("Street3");
+        address3.setPostalCode("Code3");
+        address3.setHouseNumber("3");
+        address3.setCountry("Country3");
+        address3.setCity("City3");
+        address3.setApartmentNumber("3");
+
+        Set<Address> addressSet1 = new LinkedHashSet<>();
+        addressSet1.add(address1);
+        Set<Address> addressSet2 = new LinkedHashSet<>();
+        addressSet2.add(address2);
+        Set<Address> addressSet3 = new LinkedHashSet<>();
+        addressSet3.add(address3);
+
+        card1 = new CreditCard();
+        card1.setNumber("1");
+        card1.setOwner("Owner1");
+
+        card2 = new CreditCard();
+        card2.setNumber("2");
+        card2.setOwner("Owner2");
+
+        card3 = new CreditCard();
+        card3.setNumber("3");
+        card3.setOwner("Owner3");
+
+        Set<CreditCard> cardSet1 = new LinkedHashSet<>();
+        cardSet1.add(card1);
+        Set<CreditCard> cardSet2 = new LinkedHashSet<>();
+        cardSet2.add(card2);
+        Set<CreditCard> cardSet3 = new LinkedHashSet<>();
+        cardSet3.add(card3);
+
+
         user1 = new User();
         user1.setFirstName("User1FirstName");
         user1.setLastName("User1LastName");
-        //TODO  setAddresses, setCards???
+        user1.setAddresses(addressSet1);
+        user1.setCards(cardSet2);
 
         user2 = new User();
         user2.setFirstName("User2FirstName");
         user2.setLastName("User2LastName");
+        user2.setAddresses(addressSet2);
+        user2.setCards(cardSet2);
 
         user3 = new User();
         user3.setFirstName("User3FirstName");
         user3.setLastName("User3LastName");
+        user3.setAddresses(addressSet3);
+        user3.setCards(cardSet3);
     }
 
     private void addAllUsers(){
+        addressService.addAddress(address1);
+        addressService.addAddress(address2);
+        addressService.addAddress(address3);
+
+        creditCardService.addCreditCard(card1);
+        creditCardService.addCreditCard(card2);
+        creditCardService.addCreditCard(card3);
+
         userService.addUser(user1);
         userService.addUser(user2);
         userService.addUser(user3);
@@ -111,7 +190,7 @@ public class UserServiceTest {
     }
 
     @Test
-    public void deleteAddressTest(){
+    public void deleteUserTest(){
         log.info("Testing deleting user");
         //preparation
         user1 = userService.addUser(user1);
