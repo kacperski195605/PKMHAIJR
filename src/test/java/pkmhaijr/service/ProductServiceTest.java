@@ -40,12 +40,10 @@ public class ProductServiceTest {
     @Before
     public void setUp() {
         author1 = new Author();
-        author1.setId(1);
         author1.setName("Name1");
         author1.setDescription("Description1");
 
         product1 = new Product();
-        product1.setId(1);
         product1.setDescription("Description1");
         product1.setTitle("Title1");
         product1.setPrice(new BigDecimal("14.99"));
@@ -54,12 +52,10 @@ public class ProductServiceTest {
         product1.setType(ProductType.VINYL);
 
         author2 = new Author();
-        author2.setId(2);
         author2.setName("Name2");
         author2.setDescription("Description2");
 
         product2 = new Product();
-        product2.setId(2);
         product2.setDescription("Description2");
         product2.setTitle("Title2");
         product2.setPrice(new BigDecimal("12.99"));
@@ -68,12 +64,10 @@ public class ProductServiceTest {
         product2.setType(ProductType.CD);
 
         author3 = new Author();
-        author3.setId(3);
         author3.setName("Name3");
         author3.setDescription("Description3");
 
         product3 = new Product();
-        product3.setId(3);
         product3.setDescription("Description3");
         product3.setTitle("Title3");
         product3.setPrice(new BigDecimal("9.99"));

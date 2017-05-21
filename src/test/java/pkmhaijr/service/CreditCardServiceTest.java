@@ -32,17 +32,14 @@ public class CreditCardServiceTest {
     @Before
     public void setUp() {
         card1 = new CreditCard();
-        card1.setId(1);
         card1.setNumber("1");
         card1.setOwner("Owner1");
 
         card2 = new CreditCard();
-        card2.setId(2);
         card2.setNumber("2");
         card2.setOwner("Owner2");
 
         card3 = new CreditCard();
-        card3.setId(3);
         card3.setNumber("3");
         card3.setOwner("Owner3");
     }
