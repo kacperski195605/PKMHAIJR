@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import pkmhaijr.model.dbEntities.Author;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.Wishlist;
@@ -38,7 +39,7 @@ public class WishlistServiceTest {
     private Product product1;
     private Product product2;
     private Product product3;
-    private  Author author1;
+    private Author author1;
 
     @Before
     public void setUp(){
@@ -64,7 +65,6 @@ public class WishlistServiceTest {
         product2.setType(ProductType.CD);
 
         product3 = new Product();
-        product3.setId(3);
         product3.setDescription("Description3");
         product3.setTitle("Title3");
         product3.setPrice(new BigDecimal("9.99"));
@@ -104,6 +104,7 @@ public class WishlistServiceTest {
         wishlistService.addWishlist(wishlist3);
     }
 
+    @Transactional
     @Test
     public void findWishListByIdTest(){
         log.info("Testing finding wishlist by id");
@@ -135,6 +136,7 @@ public class WishlistServiceTest {
         assertEquals("Count should be equal to 0", expectedCount, actualCount);
     }
 
+    @Transactional
     @Test
     public void countOfNotEmptyDatabaseTest(){
         log.info("Testing count of not empty database");
@@ -149,6 +151,7 @@ public class WishlistServiceTest {
         assertEquals("Count should be equal to 3", expectedCount, actualCount);
     }
 
+    @Transactional
     @Test
     public void findAllWishlistsTest(){
         log.info("Testing finding all wishlists");
@@ -168,10 +171,14 @@ public class WishlistServiceTest {
         assertTrue("List should contain wishlist 3", wishlists.contains(wishlist3));
     }
 
+    @Transactional
     @Test
     public void deleteWishlistTest(){
         log.info("Testing deleting wishlist");
         //preparation
+        author1 = authorService.addAuthor(author1);
+        product1 = productService.addProduct(product1);
+        product2 = productService.addProduct(product2);
         wishlist1 = wishlistService.addWishlist(wishlist1);
         int expectedCount = 0;
 
@@ -185,12 +192,16 @@ public class WishlistServiceTest {
         assertNull("newWishlist should be null", newWishlist);
     }
 
+    @Transactional
     @Test
     public void validUpdateWishlist(){
         log.info("Testing valid updating wishlist");
         //prepartion
+        author1 = authorService.addAuthor(author1);
+        product1 = productService.addProduct(product1);
+        product2 = productService.addProduct(product2);
         wishlist1 = wishlistService.addWishlist(wishlist1);
-        Set<Product> newProductsSet = new TreeSet<>();
+        Set<Product> newProductsSet = new HashSet<>();
         newProductsSet.add(product3);
         wishlist1.setProducts(newProductsSet);
 
@@ -204,10 +215,14 @@ public class WishlistServiceTest {
         assertEquals("New wishlist should have updated product set", wishlist1.getProducts(), newWishlist.getProducts());
     }
 
+    @Transactional
     @Test(expected = IllegalArgumentException.class)
     public void invalidUpdateWishlist(){
         log.info("Testing invalid updating wishlist");
         //preparation
+        author1 = authorService.addAuthor(author1);
+        product1 = productService.addProduct(product1);
+        product2 = productService.addProduct(product2);
         wishlist1 = wishlistService.addWishlist(wishlist1);
         wishlistService.deleteWishlist(wishlist1);
 
@@ -215,6 +230,7 @@ public class WishlistServiceTest {
         wishlistService.updateWishlist(wishlist1);
     }
 
+    @Transactional
     @Test
     public void deleteAllWishlistsTest(){
         log.info("Testing deleting all wishlists");

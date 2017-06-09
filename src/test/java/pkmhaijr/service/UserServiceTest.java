@@ -8,6 +8,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 import pkmhaijr.model.dbEntities.Address;
 import pkmhaijr.model.dbEntities.CreditCard;
 import pkmhaijr.model.dbEntities.User;
@@ -138,8 +139,11 @@ public class UserServiceTest {
         //action
         User newUser = userService.findUserByd(user1.getId());
 
+        System.out.println(newUser);
+        System.out.println(user1);
         //assertion
-        assertNotNull("User should not be null", newUser);
+//        assertTrue(newUser.equals(user1));
+//        assertNotNull("User should not be null", newUser);
         assertEquals("User should be equal", user1, newUser);
     }
 
@@ -156,6 +160,7 @@ public class UserServiceTest {
         assertEquals("Count should be equal to 0", expectedCount, actualCount);
     }
 
+    @Transactional
     @Test
     public void countOfNotEmptyDatabaseTest(){
         log.info("Testing count of not empty database");
@@ -170,6 +175,7 @@ public class UserServiceTest {
         assertEquals("Count should be equal to 3", expectedCount, actualCount);
     }
 
+    @Transactional
     @Test
     public void findAllUsersTest(){
         log.info("Testing finding all users");
@@ -233,6 +239,7 @@ public class UserServiceTest {
         userService.updateUser(user1);
     }
 
+    @Transactional
     @Test
     public void deleteAllUsersTest(){
         log.info("Testing deleting all users");
