@@ -52,4 +52,14 @@ public class UserService {
             throw new IllegalArgumentException("There is no user with id " + newUser.getId() + " in the database");
         }
     }
+
+    public void deleteAllUsers() {
+        log.info("Deleting all users");
+        userRepository.deleteAll();
+    }
+
+    public Integer countUsers() {
+        log.info("Returning number of users");
+        return Math.toIntExact(userRepository.count());
+    }
 }

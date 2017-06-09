@@ -52,4 +52,14 @@ public class ProductService {
             throw new IllegalArgumentException("There is no produvt with id " + newProduct.getId() + " in the database");
         }
     }
+
+    public void deleteAllProducts() {
+        log.info("Deleting all products");
+        productRepository.deleteAll();
+    }
+
+    public Integer countProducts() {
+        log.info("Returning number of products");
+        return Math.toIntExact(productRepository.count());
+    }
 }

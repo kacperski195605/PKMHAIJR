@@ -52,4 +52,14 @@ public class WishlistService {
             throw new IllegalArgumentException("There is no wishlist with id " + newWishlist.getId() + " in database");
         }
     }
+
+    public void deleteAllWishlists() {
+        log.info("Deleting all wishlists");
+        wishlistRepository.deleteAll();
+    }
+
+    public Integer countWishlists() {
+        log.info("Returning number of wishlists");
+        return Math.toIntExact(wishlistRepository.count());
+    }
 }
