@@ -8,12 +8,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Author;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -93,17 +95,22 @@ public class ProductServiceTest {
 
     @Test
     public void findProductByIdTest() {
-        log.info("Testing finding a product by id");
-        //preparation
-        author1 = authorService.addAuthor(author1);
-        product1 = productService.addProduct(product1);
-
-        //action
-        Product newProduct = productService.findProductById(product1.getId());
-
-        //assertion
-        assertNotNull("Product should not be null", newProduct);
-        assertEquals("Products should be equal", product1, newProduct);
+//        log.info("Testing finding a product by id");
+//        //preparation
+//        author1 = authorService.addAuthor(author1);
+//        product1 = productService.addProduct(product1);
+//
+//        //action
+//        Product newProduct = productService.findProductById(product1.getId());
+//
+//        //assertion
+//        assertNotNull("Product should not be null", newProduct);
+//        assertEquals("Products should be equal", product1, newProduct);
+        productService.deleteAllProducts();
+        addAllProducts();
+        List<Product> p = productService.findAllProducts();
+        ArrayList<Product> n = productService.getSortedProduct("T");
+        while(true){}
     }
 
     @Test

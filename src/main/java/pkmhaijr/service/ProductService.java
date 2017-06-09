@@ -2,11 +2,16 @@ package pkmhaijr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.h2.engine.Database;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pkmhaijr.manager.DatabaseFacade;
+import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.repository.ProductRepository;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -19,6 +24,9 @@ import java.util.stream.StreamSupport;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Log4j2
 public class ProductService {
+
+    @Autowired
+    DatabaseFacade databaseFacade;
 
     private final ProductRepository productRepository;
 
@@ -61,5 +69,8 @@ public class ProductService {
     public Integer countProducts() {
         log.info("Returning number of products");
         return Math.toIntExact(productRepository.count());
+    }
+    public ArrayList<Product> getSortedProduct(String prefix){
+        return productRepository.findProducts(prefix);
     }
 }

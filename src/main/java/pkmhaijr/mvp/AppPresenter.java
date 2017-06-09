@@ -23,13 +23,13 @@ public class AppPresenter implements AppContract.Presenter {
 
     @Override
     public void getCurrentUser() {
-        User temp = DatabaseFacade.getInstance().getUser();
-        if (temp == null) view.error(ErrorType.USER_NOT_FOUND);
-        else view.setCurrentUser(temp);
+//        User temp = DatabaseFacade.getInstance().getUser();
+//        if (temp == null) view.error(ErrorType.USER_NOT_FOUND);
+//        else view.setCurrentUser(temp);
     }
 
     @Override
     public void getProducts(SearchContext searchContext) {
-         view.showProducts(DatabaseFacade.getInstance().getProducts(searchContext));
+//         view.showProducts(DatabaseFacade.getInstance().getProducts(searchContext));
     }
 }
