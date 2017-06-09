@@ -32,11 +32,4 @@ public class Author implements Serializable {
     @Size(min = 1, max = 2000)
     private String description;
 
-    @OneToMany(cascade = {
-            CascadeType.MERGE,
-            CascadeType.REFRESH,
-            CascadeType.PERSIST
-    }, fetch = FetchType.EAGER, mappedBy = "author")
-    private Set<Product> products = new HashSet<>();
-
 }

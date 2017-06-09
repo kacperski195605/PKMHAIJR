@@ -27,8 +27,10 @@ import static org.junit.Assert.*;
 @Log4j2
 public class ProductServiceTest {
 
-    @Autowired ProductService productService;
-    @Autowired AuthorService authorService;
+    @Autowired
+    ProductService productService;
+    @Autowired
+    AuthorService authorService;
 
     private Author author1;
     private Author author2;
@@ -48,6 +50,7 @@ public class ProductServiceTest {
         product1.setTitle("Title1");
         product1.setPrice(new BigDecimal("14.99"));
         product1.setAuthor(author1);
+//        author1.addProduct(product1);
         product1.setGenre(Genre.ALTERNATIVE);
         product1.setType(ProductType.VINYL);
 
@@ -60,6 +63,7 @@ public class ProductServiceTest {
         product2.setTitle("Title2");
         product2.setPrice(new BigDecimal("12.99"));
         product2.setAuthor(author2);
+//        author2.addProduct(product2);
         product2.setGenre(Genre.BLUES);
         product2.setType(ProductType.CD);
 
@@ -72,6 +76,7 @@ public class ProductServiceTest {
         product3.setTitle("Title3");
         product3.setPrice(new BigDecimal("9.99"));
         product3.setAuthor(author3);
+//        author3.addProduct(product3);
         product3.setGenre(Genre.FOLK);
         product3.setType(ProductType.CD);
     }
