@@ -32,6 +32,7 @@ public class AddressServiceTest {
 
     @Before
     public void setUp() {
+        addressService.deleteAllAddresses();
         address1 = new Address();
         address1.setStreet("Street1");
         address1.setPostalCode("Code1");
