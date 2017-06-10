@@ -1,18 +1,25 @@
 package pkmhaijr.manager;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.User;
+import pkmhaijr.service.ProductService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Asasello on 19-Apr-17.
  */
 public class DatabaseFacade {
 
-    private DatabaseFacade(){}
+    @Autowired
+    private ProductService productService;
+
+    private DatabaseFacade() {
+    }
 
     public static DatabaseFacade getInstance(){return new DatabaseFacade();}
 
@@ -30,5 +37,9 @@ public class DatabaseFacade {
             add(new Product());
             add(new Product());
         }};
+    }
+
+    public List<Product> getAllProducts() {
+        return productService.findAllProducts();
     }
 }
