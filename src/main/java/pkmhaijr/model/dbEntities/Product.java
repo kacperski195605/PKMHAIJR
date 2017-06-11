@@ -1,6 +1,7 @@
 package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
 
@@ -55,5 +56,22 @@ public class Product implements Serializable {
     @ManyToOne
     @JoinColumn(name = "AUTHOR_ID", nullable = false)
     private Author author;
+
+    public Product() {
+        this(new BigDecimal("0.0"), "", null, "", null);
+    }
+
+    public Product(BigDecimal price, String title, ProductType type, String description, Genre genre) {
+        this(price, title, type, description, genre, null);
+    }
+
+    public Product(BigDecimal price, String title, ProductType type, String description, Genre genre, Author author) {
+        this.price = price;
+        this.title = title;
+        this.type = type;
+        this.description = description;
+        this.genre = genre;
+        this.author = author;
+    }
 
 }

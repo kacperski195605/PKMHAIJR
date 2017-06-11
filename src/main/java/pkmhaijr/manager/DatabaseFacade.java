@@ -2,7 +2,9 @@ package pkmhaijr.manager;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.User;
@@ -15,15 +17,22 @@ import java.util.List;
 /**
  * Created by Asasello on 19-Apr-17.
  */
-@RequiredArgsConstructor(onConstructor = @__(@Inject))
+@Component
+@Log4j2
 public class DatabaseFacade {
 
-    private final ProductService productService;
-    private final AddressService addressService;
-    private final AuthorService authorService;
-    private final CreditCardService creditCardService;
-    private final UserService userService;
-    private final WishlistService wishlistService;
+    @Autowired
+    private  ProductService productService;
+    @Autowired
+    private  AddressService addressService;
+    @Autowired
+    private  AuthorService authorService;
+    @Autowired
+    private  CreditCardService creditCardService;
+    @Autowired
+    private  UserService userService;
+    @Autowired
+    private  WishlistService wishlistService;
 
     public User getUser(){
         //TODO: logic for get user
