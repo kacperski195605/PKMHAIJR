@@ -40,4 +40,13 @@ public class CreditCard {
 //    @Column
 //    @Size(min = 1, max = 80)
 //    private String safeCode;
+
+    public CreditCard() {
+        this("", "");
+    }
+
+    public CreditCard(String number, String owner) {
+        this.number = number;
+        this.owner = owner;
+    }
 }

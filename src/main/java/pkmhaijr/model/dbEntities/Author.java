@@ -32,4 +32,12 @@ public class Author implements Serializable {
     @Size(min = 1, max = 2000)
     private String description;
 
+    public Author() {
+        this("", "");
+    }
+
+    public Author(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }
