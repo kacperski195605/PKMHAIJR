@@ -4,6 +4,9 @@ package pkmhaijr;
  * Created by Asasello on 22-Apr-17.
  */
 
+import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pkmhaijr.mvp.AppContract;
 import pkmhaijr.mvp.AppPresenter;
 import pkmhaijr.model.app.SearchContext;
@@ -17,21 +20,22 @@ import java.util.ArrayList;
 /**
  * Store instance
  */
+
+@Component
+@Log4j2
 public class App implements AppContract.View {
+
+    @Autowired
     private AppContract.Presenter mPresenter;
+
     private User currentUser;
     private SearchContext searchContext;
 
-    private App() {
+    public App() {
         init();
     }
 
-    public static App newInstance() {
-        return new App();
-    }
-
     private void init() {
-        mPresenter = AppPresenter.newInstance(this);
         searchContext = new SearchContext.Builder("").build();
     }
 
@@ -53,7 +57,7 @@ public class App implements AppContract.View {
     @Override
     public void error(ErrorType errorType) {
         //TODO: add logic to error
-        System.err.println(errorType);
+        log.error(errorType);
     }
 
 }

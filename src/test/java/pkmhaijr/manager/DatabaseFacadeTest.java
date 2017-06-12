@@ -10,12 +10,14 @@ import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.runners.MockitoJUnitRunner;
 import pkmhaijr.model.dbEntities.Product;
+import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
 import pkmhaijr.service.*;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -45,36 +47,53 @@ public class DatabaseFacadeTest {
     private DatabaseFacade databaseFacade;
 
     private List<Product> products;
+    private List<User> users;
+
+    private void initProducts() {
+        products = Arrays.asList(
+                new Product(new BigDecimal("14.99"), "title1", ProductType.CD, "desc1", Genre.ALTERNATIVE),
+                new Product(new BigDecimal("12.99"), "title2", ProductType.CD, "desc2", Genre.ALTERNATIVE),
+                new Product(new BigDecimal("16.99"), "title3", ProductType.CD, "desc3", Genre.BLUES),
+                new Product(new BigDecimal("8.99"), "title4", ProductType.CD, "desc4", Genre.CLASSICAL),
+                new Product(new BigDecimal("13.99"), "title5", ProductType.CD, "desc5", Genre.CLASSICAL),
+                new Product(new BigDecimal("23.99"), "title6", ProductType.VINYL, "desc6", Genre.COUNTRY),
+                new Product(new BigDecimal("9.99"), "title7", ProductType.CD, "desc7", Genre.DUBSTEP),
+                new Product(new BigDecimal("15.99"), "title8", ProductType.CD, "desc8", Genre.ELECTRONIC),
+                new Product(new BigDecimal("13.99"), "title9", ProductType.CD, "desc9", Genre.ELECTRONIC),
+                new Product(new BigDecimal("17.99"), "title10", ProductType.CD, "desc1", Genre.ELECTRONIC),
+                new Product(new BigDecimal("18.99"), "title11", ProductType.VINYL, "desc11", Genre.ELECTRONIC),
+                new Product(new BigDecimal("14.99"), "title12", ProductType.CD, "desc12", Genre.FOLK),
+                new Product(new BigDecimal("25.99"), "title13", ProductType.VINYL, "desc13", Genre.HOUSE),
+                new Product(new BigDecimal("23.99"), "title14", ProductType.VINYL, "desc14", Genre.JAZZ),
+                new Product(new BigDecimal("19.99"), "title15", ProductType.VINYL, "desc15", Genre.ELECTRONIC),
+                new Product(new BigDecimal("11.99"), "title16", ProductType.CD, "desc16", Genre.PUNK),
+                new Product(new BigDecimal("18.99"), "title17", ProductType.VINYL, "desc17", Genre.ROCK)
+        );
+        Mockito.when(productService.findAllProducts()).thenReturn(products);
+    }
+
+    private void initUsers() {
+        //TODO: change this method when constructors are updated
+        User user1 = new User();
+        user1.setAddresses(Collections.emptySet());
+        user1.setCards(Collections.emptySet());
+        user1.setFirstName("John");
+        user1.setLastName("Doe");
+        user1.setId(1);
+        users = Collections.singletonList(user1);
+    }
 
     @Before
     public void before() {
         MockitoAnnotations.initMocks(this);
-        products = Arrays.asList(
-                new Product(new BigDecimal("14.99"), "title1", ProductType.CD, "desc1", Genre.ALTERNATIVE),
-                new Product(new BigDecimal("12.99"), "title2", ProductType.CD, "desc2", Genre.ALTERNATIVE),
-                new Product(new BigDecimal("16.99"), "title3", ProductType.CD, "desc2", Genre.BLUES),
-                new Product(new BigDecimal("8.99"), "title4", ProductType.CD, "desc2", Genre.CLASSICAL),
-                new Product(new BigDecimal("13.99"), "title5", ProductType.CD, "desc2", Genre.CLASSICAL),
-                new Product(new BigDecimal("23.99"), "title6", ProductType.VINYL, "desc2", Genre.COUNTRY),
-                new Product(new BigDecimal("9.99"), "title7", ProductType.CD, "desc2", Genre.DUBSTEP),
-                new Product(new BigDecimal("15.99"), "title8", ProductType.CD, "desc2", Genre.ELECTRONIC),
-                new Product(new BigDecimal("13.99"), "title9", ProductType.CD, "desc2", Genre.ELECTRONIC),
-                new Product(new BigDecimal("17.99"), "title10", ProductType.CD, "desc2", Genre.ELECTRONIC),
-                new Product(new BigDecimal("18.99"), "title11", ProductType.VINYL, "desc2", Genre.ELECTRONIC),
-                new Product(new BigDecimal("14.99"), "title12", ProductType.CD, "desc2", Genre.FOLK),
-                new Product(new BigDecimal("25.99"), "title13", ProductType.VINYL, "desc2", Genre.HOUSE),
-                new Product(new BigDecimal("23.99"), "title14", ProductType.VINYL, "desc2", Genre.JAZZ),
-                new Product(new BigDecimal("19.99"), "title15", ProductType.VINYL, "desc2", Genre.ELECTRONIC),
-                new Product(new BigDecimal("11.99"), "title16", ProductType.CD, "desc2", Genre.PUNK),
-                new Product(new BigDecimal("18.99"), "title17", ProductType.VINYL, "desc2", Genre.ROCK)
-        );
-        Mockito.when(productService.findAllProducts()).thenReturn(products);
+        initProducts();
+        initUsers();
     }
 
 
     @Test
     public void getAllProductsTest() {
-        //preparatiom
+        //preparation
         int expectedCount = products.size();
 
         //action

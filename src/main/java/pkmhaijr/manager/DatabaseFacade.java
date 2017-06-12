@@ -34,9 +34,8 @@ public class DatabaseFacade {
     @Autowired
     private  WishlistService wishlistService;
 
-    public User getUser(){
-        //TODO: logic for get user
-        return new User();
+    public User getUser(int id){
+        return userService.findUserByd(id);
     }
 
     //Field SortingType in SearchContext should be ignored in this method
@@ -53,4 +52,6 @@ public class DatabaseFacade {
     public List<Product> getAllProducts() {
         return productService.findAllProducts();
     }
+
+
 }

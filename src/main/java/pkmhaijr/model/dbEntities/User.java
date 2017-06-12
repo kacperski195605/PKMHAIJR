@@ -5,6 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -41,6 +42,13 @@ public class User {
             CascadeType.PERSIST
     }, fetch = FetchType.EAGER)
     private Set<CreditCard> cards = new HashSet<>();
+
+    @ManyToMany(cascade = {
+            CascadeType.PERSIST,
+            CascadeType.MERGE,
+            CascadeType.REFRESH
+    }, fetch = FetchType.EAGER)
+    private List<Product> orderHistory;
 
     public boolean equals(Object o) {
         if (o == this) return true;

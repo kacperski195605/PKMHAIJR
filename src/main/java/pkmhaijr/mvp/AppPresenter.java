@@ -19,20 +19,19 @@ public class AppPresenter implements AppContract.Presenter {
 
     private AppContract.View view;
 
-    private AppPresenter(AppContract.View view) {
+    public AppPresenter(AppContract.View view) {
         this.view = view;
     }
 
-    public static AppPresenter newInstance(AppContract.View view) {
-        return new AppPresenter(view);
-    }
-
-
     @Override
     public void getCurrentUser() {
-        User temp = databaseFacade.getUser();
-        if (temp == null) view.error(ErrorType.USER_NOT_FOUND);
-        else view.setCurrentUser(temp);
+        User temp = databaseFacade.getUser(1);
+        if (temp == null) {
+            view.error(ErrorType.USER_NOT_FOUND);
+        }
+        else {
+            view.setCurrentUser(temp);
+        }
     }
 
     @Override
