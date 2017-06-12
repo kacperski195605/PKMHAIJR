@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import pkmhaijr.model.app.SearchContext;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.User;
+import pkmhaijr.model.enums.Genre;
 import pkmhaijr.service.*;
 
 import javax.inject.Inject;
@@ -40,13 +41,11 @@ public class DatabaseFacade {
 
     //Field SortingType in SearchContext should be ignored in this method
     public ArrayList<Product> getProducts(SearchContext searchContext) {
-        //TODO: Logic for filter products
-        return new ArrayList<Product>(){{
-            add(new Product());
-            add(new Product());
-            add(new Product());
-            add(new Product());
-        }};
+        if(searchContext.getGenreType() == Genre.ALL) {
+            return productService.getSortedProduct(searchContext.getSearchPhrase());
+        }else{
+            return productService.getSortedProduct(searchContext.getSearchPhrase(),searchContext.getGenreType());
+        }
     }
 
     public List<Product> getAllProducts() {
