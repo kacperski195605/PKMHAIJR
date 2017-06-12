@@ -4,9 +4,7 @@ import lombok.Data;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by patry on 23/04/17.
@@ -71,5 +69,20 @@ public class User {
 //        final Object other$cards = other.getCards();
 //        if (this$cards == null ? other$cards != null : !this$cards.equals(other$cards)) return false;
         return true;
+    }
+
+    public User() {
+        this.firstName = "";
+        this.lastName = "";
+        this.addresses = Collections.emptySet();
+        this.cards = Collections.emptySet();
+        this.orderHistory = Collections.emptyList();
+    }
+    public User(String firstName, String lastName, Set<Address> addresses, Set<CreditCard> cards, List<Product> orderHistory) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addresses = addresses;
+        this.cards = cards;
+        this.orderHistory = orderHistory;
     }
 }
