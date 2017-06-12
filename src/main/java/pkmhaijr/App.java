@@ -16,6 +16,7 @@ import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.util.ProductsSortingUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Store instance
@@ -49,7 +50,7 @@ public class App implements AppContract.View {
     }
 
     @Override
-    public void showProducts(ArrayList<Product> productsList) {
+    public void showProducts(List<Product> productsList) {
         //TODO: do something with products list :) ASK HOW TO TEST IT (WE DO NOT SAVE PRODUCT LIST HERE)
         ProductsSortingUtils.getSortedList(productsList, searchContext.getSortingType());
     }

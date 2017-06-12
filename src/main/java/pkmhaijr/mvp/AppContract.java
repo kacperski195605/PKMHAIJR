@@ -7,6 +7,7 @@ import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.model.enums.ErrorType;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Asasello on 22-Apr-17.
@@ -15,7 +16,7 @@ public interface AppContract {
     public interface View{
         void setCurrentUser(User user);
         void error(ErrorType errorType);
-        void showProducts(ArrayList<Product> productsList);
+        void showProducts(List<Product> productsList);
     }
 
     public interface Presenter{

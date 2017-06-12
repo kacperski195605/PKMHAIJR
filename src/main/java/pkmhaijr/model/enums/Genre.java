@@ -1,5 +1,9 @@
 package pkmhaijr.model.enums;
 
+import javax.persistence.Embeddable;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+
 /**
  * Created by patry on 22/04/17.
  */

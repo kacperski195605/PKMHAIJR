@@ -66,15 +66,15 @@ public class ProductService {
         return Math.toIntExact(productRepository.count());
     }
 
-    public ArrayList<Product> getSortedProduct(String prefix){
+    public List<Product> getSortedProduct(String prefix){
         return productRepository.findProducts(prefix);
     }
 
-    public ArrayList<Product> getSortedProduct(Genre genre){
-        return productRepository.findProducts(genre);
+    public List<Product> getSortedProduct(Genre genre){
+        return productRepository.findByGenre(genre);
     }
 
-    public ArrayList<Product> getSortedProduct(String searchPhrase, Genre genreType) {
+    public List<Product> getSortedProduct(String searchPhrase, Genre genreType) {
         return productRepository.findProducts(searchPhrase, genreType);
     }
 }

@@ -51,6 +51,7 @@ public class Product implements Serializable {
 
     @NotNull
     @Column
+    @Enumerated(EnumType.STRING)
     private Genre genre;
 
     @ManyToOne
