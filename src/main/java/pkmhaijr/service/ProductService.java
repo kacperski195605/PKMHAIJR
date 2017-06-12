@@ -70,6 +70,10 @@ public class ProductService {
         return productRepository.findProducts(prefix);
     }
 
+    public ArrayList<Product> getSortedProduct(Genre genre){
+        return productRepository.findProducts(genre);
+    }
+
     public ArrayList<Product> getSortedProduct(String searchPhrase, Genre genreType) {
         return productRepository.findProducts(searchPhrase, genreType);
     }

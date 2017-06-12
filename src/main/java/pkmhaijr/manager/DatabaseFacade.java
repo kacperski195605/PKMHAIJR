@@ -40,10 +40,12 @@ public class DatabaseFacade {
     }
 
     //Field SortingType in SearchContext should be ignored in this method
-    public ArrayList<Product> getProducts(SearchContext searchContext) {
+    public List<Product> getProducts(SearchContext searchContext) {
         if(searchContext.getGenreType() == Genre.ALL) {
+            if(searchContext.getSearchPhrase().length() == 0) return getAllProducts();
             return productService.getSortedProduct(searchContext.getSearchPhrase());
         }else{
+            if(searchContext.getSearchPhrase().length() == 0) return productService.getSortedProduct(searchContext.getGenreType());
             return productService.getSortedProduct(searchContext.getSearchPhrase(),searchContext.getGenreType());
         }
     }
