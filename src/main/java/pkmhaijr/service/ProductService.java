@@ -71,10 +71,7 @@ public class ProductService {
     }
 
     public List<Product> getSortedProduct(Genre genre){
+        if(genre == Genre.ALL) return findAllProducts();
         return productRepository.findByGenre(genre);
-    }
-
-    public List<Product> getSortedProduct(String searchPhrase, Genre genreType) {
-        return productRepository.findProducts(searchPhrase, genreType);
     }
 }

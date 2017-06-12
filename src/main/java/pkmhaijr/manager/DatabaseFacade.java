@@ -45,8 +45,7 @@ public class DatabaseFacade {
             if(searchContext.getSearchPhrase().length() == 0) return getAllProducts();
             return productService.getSortedProduct(searchContext.getSearchPhrase());
         }else{
-            if(searchContext.getSearchPhrase().length() == 0) return productService.getSortedProduct(searchContext.getGenreType());
-            return productService.getSortedProduct(searchContext.getSearchPhrase(),searchContext.getGenreType());
+            return productService.getSortedProduct(searchContext.getGenreType());
         }
     }
 

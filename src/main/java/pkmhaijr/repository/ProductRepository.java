@@ -22,8 +22,5 @@ public interface ProductRepository extends CrudRepository<Product, Integer> {
     @Query(nativeQuery = true, value= "Select * from PRODUCTS p where p.title like %:title% and p.genre in :genre)")//= \':genre\'")
     List<Product> findProducts(@Param("title") String title, @Param("genre")Genre genre);
 
-    @Query(nativeQuery = true, value= "Select * from PRODUCTS p where p.genre in :genre")
-    List<Product> findProducts(@Param("genre")Genre genre);
-
     public List<Product> findByGenre( Genre genre);
 }

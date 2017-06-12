@@ -45,7 +45,7 @@ public class ProductQueriesTest {
         author.setDescription("Description1");
         author = authorService.addAuthor(author);
 
-        productService.addProduct(new Product(new BigDecimal("0.0"),"Title_01_ALTERNATIVE",ProductType.CD,"desc",Genre.ALTERNATIVE, author));
+        productService.addProduct(new Product(new BigDecimal("0.0"),"FirstTitle_01_ALTERNATIVE",ProductType.CD,"desc",Genre.ALTERNATIVE, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_02_ALTERNATIVE",ProductType.CD,"desc",Genre.ALTERNATIVE, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_03_ALL",ProductType.CD,"desc",Genre.ALL, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_04_CLASSICAL",ProductType.CD,"desc",Genre.CLASSICAL, author));
@@ -53,21 +53,49 @@ public class ProductQueriesTest {
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_06_FOLK",ProductType.CD,"desc",Genre.FOLK, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_07_FOLK",ProductType.CD,"desc",Genre.FOLK, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_08_CLASSICAL",ProductType.CD,"desc",Genre.CLASSICAL, author));
-        productService.addProduct(new Product(new BigDecimal("0.0"),"Title_09_ALTERNATIVE",ProductType.CD,"desc",Genre.ALTERNATIVE, author));
+        productService.addProduct(new Product(new BigDecimal("0.0"),"FirstTitle_09_ALTERNATIVE",ProductType.CD,"desc",Genre.ALTERNATIVE, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_10_ALL",ProductType.CD,"desc",Genre.ALL, author));
         productService.addProduct(new Product(new BigDecimal("0.0"),"Title_11_ALTERNATIVE",ProductType.CD,"desc",Genre.ALTERNATIVE, author));
     }
 
     @After
     public void clean() {
-        //authorService.deleteAllAuthors();
         productService.deleteAllProducts();
+        authorService.deleteAllAuthors();
     }
 
     @Test
-    public void productByGenreSearchTest(){
+    public void productByGenreSearchTest_FOLK(){
         List<Product> sortedProductList = productService.getSortedProduct(Genre.FOLK);
         assertNotNull("sortedProductList should not be null", sortedProductList);
         assertEquals("sortedProductList should contain "+FolkCount+" products",FolkCount, sortedProductList.size());
+    }
+
+    @Test
+    public void productByGenreSearchTest_ALL(){
+        List<Product> sortedProductList = productService.getSortedProduct(Genre.ALL);
+        assertNotNull("sortedProductList should not be null", sortedProductList);
+        assertEquals("sortedProductList should contain "+ALLCount+" products",ALLCount, sortedProductList.size());
+    }
+
+    @Test
+    public void productByGenreSearchTest_OTHER(){
+        List<Product> sortedProductList = productService.getSortedProduct(Genre.POP);
+        assertNotNull("sortedProductList should not be null", sortedProductList);
+        assertEquals("sortedProductList should contain "+0+" products",0, sortedProductList.size());
+    }
+
+    @Test
+    public void productByNameTestFirst(){
+        List<Product> sortedProductList = productService.getSortedProduct("First");
+        assertNotNull("sortedProductList should not be null", sortedProductList);
+        assertEquals("sortedProductList should contain "+2+" products",2, sortedProductList.size());
+    }
+
+    @Test
+    public void productByNameTestNE(){
+        List<Product> sortedProductList = productService.getSortedProduct("NNNNNNNNNNN");
+        assertNotNull("sortedProductList should not be null", sortedProductList);
+        assertEquals("sortedProductList should contain "+0+" products",0, sortedProductList.size());
     }
 }
