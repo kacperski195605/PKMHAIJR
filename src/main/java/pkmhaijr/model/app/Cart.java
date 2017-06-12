@@ -1,7 +1,9 @@
 package pkmhaijr.model.app;
 
 import javafx.util.Pair;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import pkmhaijr.model.dbEntities.Product;
 
 import java.util.HashMap;
@@ -9,15 +11,18 @@ import java.util.HashMap;
 /**
  * Created by Asasello on 12-Jun-17.
  */
+@Component
+@Log4j2
 public class Cart {
-    @Autowired
-    private HashMap<Product,Integer> products;
+    private final HashMap<Product,Integer> products;
     private double price;
     private int size;
 
+    @Autowired
     public Cart(){
         price = 0;
         size = 0;
+        this.products = new HashMap<>();
     }
 
     public void addToCart(Product product){
@@ -42,6 +47,14 @@ public class Cart {
         products.clear();
         size = 0;
         price = 0;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }
 
