@@ -24,20 +24,33 @@ public class RecommendationService {
     public Genre findFavouriteGenre(User user) {
         List<Product> orderHistory = user.getOrderHistory();
 
-        //creating distinct set of products
-        Set<Product> distinctProducts = getDistinctProducts(orderHistory);
+        //distinct set of genres
+        Set<Genre> distinctGenres = getDistinctGenres(orderHistory);
 
-        Queue<Tuple<Genre, Integer>> genresSet = new PriorityQueue<>(Comparator.comparingInt(Tuple::getSecond));
-
-//        orderHistory
-//                .stream()
-//                .filter(Objects::nonNull)
-//                .map(product -> new Tu)
+        //priorityQueue that will check which genre is user's favourite
+        Queue<Tuple<Genre, Long>> genresQueue = fitProductsIntoPriorityQueue(orderHistory, distinctGenres);
 
         return null;
     }
 
-    protected Set<Product> getDistinctProducts(List<Product> products) {
-        return products.stream().distinct().collect(Collectors.toSet());
+    protected Set<Genre> getDistinctGenres(List<Product> products) {
+        return products.stream()
+                .filter(Objects::nonNull)
+                .map(Product::getGenre)
+                .distinct()
+                .collect(Collectors.toSet());
+    }
+
+    protected PriorityQueue<Tuple<Genre, Long>> fitProductsIntoPriorityQueue(List<Product> orderHistory, Set<Genre> genres) {
+        PriorityQueue<Tuple<Genre, Long>> genresQueue = new PriorityQueue<>((a, b) -> Math.toIntExact(b.getSecond() - a.getSecond()));
+        genres.stream()
+            .filter(Objects::nonNull)
+            .map(genre -> new Tuple<>(genre, orderHistory.stream()
+                    .filter(Objects::nonNull)
+                    .filter(product -> product.getGenre() == genre)
+                    .count()
+                ))
+            .forEach(genresQueue::add);
+        return genresQueue;
     }
 }

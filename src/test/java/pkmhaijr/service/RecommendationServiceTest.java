@@ -3,12 +3,12 @@ package pkmhaijr.service;
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import pkmhaijr.model.Tuple;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
@@ -46,25 +46,47 @@ public class RecommendationServiceTest {
         );
     }
 
-    private Set<Product> prepareOrderHistorySet() {
-        Set<Product> orderHistorySet = new HashSet<>();
-        orderHistorySet.add(product1);
-        orderHistorySet.add(product2);
-        orderHistorySet.add(product3);
+    private Set<Genre> prepareOrderHistorySet() {
+        Set<Genre> orderHistorySet = new HashSet<>();
+        orderHistorySet.add(Genre.ALTERNATIVE);
+        orderHistorySet.add(Genre.BLUES);
         return orderHistorySet;
+    }
+
+    private PriorityQueue<Tuple<Genre, Long>> prepareGenresQueue() {
+        PriorityQueue<Tuple<Genre, Long>> genresQueue = new PriorityQueue<>((a, b) -> Math.toIntExact(b.getSecond() - a.getSecond()));
+        genresQueue.add(new Tuple<>(Genre.ALTERNATIVE, 6L));
+        genresQueue.add(new Tuple<>(Genre.BLUES, 1L));
+        return genresQueue;
     }
 
     @Test
     public void getDistinctProductsTest() {
         //preparation
         List<Product> orderHistory = prepareOrderHistoryWithRepetitions();
-        Set<Product> expectedSet = prepareOrderHistorySet();
+        Set<Genre> expectedSet = prepareOrderHistorySet();
 
         //action
-        Set<Product> actualSet = recommendationService.getDistinctProducts(orderHistory);
+        Set<Genre> actualSet = recommendationService.getDistinctGenres(orderHistory);
 
         //assertion
         Assertions.assertThat(expectedSet).hasSameElementsAs(actualSet);
+        Assertions.assertThat(expectedSet).hasSameSizeAs(actualSet);
     }
 
+
+    @Test
+    public void fitProductsIntoPriorityQueueTest() {
+        //preparation
+        List<Product> orderHistory = prepareOrderHistoryWithRepetitions();
+        Set<Genre> genres = prepareOrderHistorySet();
+        PriorityQueue<Tuple<Genre, Long>> expectedQueue = prepareGenresQueue();
+
+        //action
+        PriorityQueue<Tuple<Genre, Long>> actualQueue = recommendationService.fitProductsIntoPriorityQueue(orderHistory, genres);
+
+        //assertion
+        Assertions.assertThat(expectedQueue).hasSameElementsAs(actualQueue);
+        Assertions.assertThat(expectedQueue).hasSameSizeAs(actualQueue);
+    }
 }
