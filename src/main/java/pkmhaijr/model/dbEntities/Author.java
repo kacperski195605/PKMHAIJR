@@ -1,6 +1,7 @@
 package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -16,7 +17,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "AUTHORS")
-public class Author implements Serializable {
+public class Author implements Serializable, Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -32,4 +33,13 @@ public class Author implements Serializable {
     @Size(min = 1, max = 2000)
     private String description;
 
+    @Override
+    public Author clone() {
+        Author cloned = new Author();
+        cloned.setName(name);
+        cloned.setDescription(description);
+        cloned.setId(id);
+        return cloned;
+    }
+    
 }

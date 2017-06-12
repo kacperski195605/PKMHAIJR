@@ -1,6 +1,7 @@
 package pkmhaijr.model.dbEntities;
 
 import lombok.Data;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
@@ -11,6 +12,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Objects;
 
 /**
  * Created by patry on 18/04/17.
@@ -19,7 +21,8 @@ import java.math.BigDecimal;
 @Data
 @Entity
 @Table(name = "PRODUCTS")
-public class Product implements Serializable {
+@Log4j2
+public class Product implements Serializable, Cloneable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -74,4 +77,10 @@ public class Product implements Serializable {
         this.author = author;
     }
 
+    @Override
+    public Product clone() {
+        Product cloned = new Product(price, title, type, description, genre, Objects.isNull(author) ? null : author.clone());
+        cloned.setId(id);
+        return cloned;
+    }
 }
