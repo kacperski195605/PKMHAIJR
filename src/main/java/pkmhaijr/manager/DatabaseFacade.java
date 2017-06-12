@@ -53,5 +53,8 @@ public class DatabaseFacade {
         return productService.findAllProducts();
     }
 
-
+    public List<Product> getUsersOrderHistory(int userId) {
+        User user = userService.findUserByd(userId);
+        return user.getOrderHistory();
+    }
 }

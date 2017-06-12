@@ -1,13 +1,11 @@
 package pkmhaijr.manager;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.runners.MockitoJUnitRunner;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.User;
@@ -46,6 +44,8 @@ public class DatabaseFacadeTest {
     @InjectMocks
     private DatabaseFacade databaseFacade;
 
+    private User user1;
+
     private List<Product> products;
     private List<User> users;
 
@@ -74,13 +74,16 @@ public class DatabaseFacadeTest {
 
     private void initUsers() {
         //TODO: change this method when constructors are updated
-        User user1 = new User();
+        user1 = new User();
         user1.setAddresses(Collections.emptySet());
         user1.setCards(Collections.emptySet());
         user1.setFirstName("John");
         user1.setLastName("Doe");
+        user1.setOrderHistory(products);
         user1.setId(1);
         users = Collections.singletonList(user1);
+        Mockito.when(userService.findAllUsers()).thenReturn(users);
+        Mockito.when(userService.findUserByd(Matchers.eq(1))).thenReturn(user1);
     }
 
     @Before
@@ -94,13 +97,26 @@ public class DatabaseFacadeTest {
     @Test
     public void getAllProductsTest() {
         //preparation
-        int expectedCount = products.size();
+        List<Product> productsFromDb = products;
 
         //action
         List<Product> productsReturned = databaseFacade.getAllProducts();
-        int actualCount = productsReturned.size();
 
         //assertion
-        assertEquals("Sizes of lists should be equal", expectedCount, actualCount);
+        Assertions.assertThat(productsFromDb).hasSameSizeAs(productsReturned);
+        Assertions.assertThat(productsFromDb).hasSameElementsAs(productsReturned);
+    }
+
+    @Test
+    public void getUsersOrderHistoryTest() {
+        //preparation
+        List<Product> orderHistoryFromDb = user1.getOrderHistory();
+
+        //action
+        List<Product> orderHistory = databaseFacade.getUsersOrderHistory(1);
+
+        //assertion
+        Assertions.assertThat(orderHistoryFromDb).hasSameSizeAs(orderHistory);
+        Assertions.assertThat(orderHistoryFromDb).hasSameElementsAs(orderHistory);
     }
 }
