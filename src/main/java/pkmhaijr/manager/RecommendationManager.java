@@ -1,4 +1,4 @@
-package pkmhaijr.service;
+package pkmhaijr.manager;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -8,6 +8,7 @@ import pkmhaijr.model.Tuple;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.model.enums.Genre;
+import pkmhaijr.service.ProductService;
 
 import javax.inject.Inject;
 import java.util.*;
@@ -20,12 +21,19 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Log4j2
-public class RecommendationService {
+public class RecommendationManager {
 
     @Autowired
     private ProductService productService;
 
-    public Genre findFavouriteGenre(User user) {
+    public List<Product> recommendProductsByGenre(User user, int numberOfProducts) {
+        Genre genre = findFavouriteGenre(user);
+        List<Product> productsWithGenre = productService.getSortedProduct(genre);
+        Collections.shuffle(productsWithGenre, new Random(System.nanoTime()));
+        return productsWithGenre.subList(0, Math.min(productsWithGenre.size(), numberOfProducts));
+    }
+
+    Genre findFavouriteGenre(User user) {
         List<Product> orderHistory = user.getOrderHistory();
 
         //distinct set of genres
@@ -37,7 +45,7 @@ public class RecommendationService {
         return genresQueue.poll().getFirst();
     }
 
-    protected Set<Genre> getDistinctGenres(List<Product> products) {
+    Set<Genre> getDistinctGenres(List<Product> products) {
         return products.stream()
                 .filter(Objects::nonNull)
                 .map(Product::getGenre)
@@ -45,7 +53,7 @@ public class RecommendationService {
                 .collect(Collectors.toSet());
     }
 
-    protected PriorityQueue<Tuple<Genre, Long>> fitProductsIntoPriorityQueue(List<Product> orderHistory, Set<Genre> genres) {
+    PriorityQueue<Tuple<Genre, Long>> fitProductsIntoPriorityQueue(List<Product> orderHistory, Set<Genre> genres) {
         PriorityQueue<Tuple<Genre, Long>> genresQueue = new PriorityQueue<>((a, b) -> Math.toIntExact(b.getSecond() - a.getSecond()));
         genres.stream()
             .filter(Objects::nonNull)

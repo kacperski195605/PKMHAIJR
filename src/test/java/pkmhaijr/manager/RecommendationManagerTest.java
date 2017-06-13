@@ -1,18 +1,18 @@
-package pkmhaijr.service;
+package pkmhaijr.manager;
 
 import lombok.extern.log4j.Log4j2;
 import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.mockito.*;
+import org.mockito.runners.MockitoJUnitRunner;
 import pkmhaijr.model.Tuple;
 import pkmhaijr.model.dbEntities.Product;
 import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
+import pkmhaijr.service.ProductService;
 
 import java.math.BigDecimal;
 import java.util.*;
@@ -21,13 +21,15 @@ import java.util.*;
  * Created by patry on 12/06/17.
  */
 
-@RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
+@RunWith(MockitoJUnitRunner.class)
 @Log4j2
-public class RecommendationServiceTest {
+public class RecommendationManagerTest {
 
-    @Autowired
-    private RecommendationService recommendationService;
+    @Mock
+    private ProductService productService;
+
+    @InjectMocks
+    private RecommendationManager recommendationManager;
 
     private Product product1;
     private Product product2;
@@ -38,6 +40,7 @@ public class RecommendationServiceTest {
         product1 = new Product(new BigDecimal("14.99"), "title1", ProductType.CD, "desc1", Genre.ALTERNATIVE);
         product2 = new Product(new BigDecimal("12.99"), "title2", ProductType.CD, "desc2", Genre.ALTERNATIVE);
         product3 = new Product(new BigDecimal("16.99"), "title3", ProductType.CD, "desc3", Genre.BLUES);
+        MockitoAnnotations.initMocks(this);
     }
 
     private List<Product> prepareOrderHistoryWithRepetitions() {
@@ -68,7 +71,7 @@ public class RecommendationServiceTest {
         Set<Genre> expectedSet = prepareOrderHistorySet();
 
         //action
-        Set<Genre> actualSet = recommendationService.getDistinctGenres(orderHistory);
+        Set<Genre> actualSet = recommendationManager.getDistinctGenres(orderHistory);
 
         //assertion
         Assertions.assertThat(expectedSet).hasSameElementsAs(actualSet);
@@ -84,7 +87,7 @@ public class RecommendationServiceTest {
         PriorityQueue<Tuple<Genre, Long>> expectedQueue = prepareGenresQueue();
 
         //action
-        PriorityQueue<Tuple<Genre, Long>> actualQueue = recommendationService.fitProductsIntoPriorityQueue(orderHistory, genres);
+        PriorityQueue<Tuple<Genre, Long>> actualQueue = recommendationManager.fitProductsIntoPriorityQueue(orderHistory, genres);
 
         //assertion
         Assertions.assertThat(expectedQueue).hasSameElementsAs(actualQueue);
@@ -99,9 +102,25 @@ public class RecommendationServiceTest {
         Genre expectedGenre = Genre.ALTERNATIVE;
 
         //action
-        Genre actualGenre = recommendationService.findFavouriteGenre(user);
+        Genre actualGenre = recommendationManager.findFavouriteGenre(user);
 
         //assertion
         Assertions.assertThat(expectedGenre).isEqualTo(actualGenre);
+    }
+
+    @Test
+    public void recommendProductsByGenre() {
+        //preparation
+        User user = new User("John", "Doe", Collections.emptySet(), Collections.emptySet(),
+                prepareOrderHistoryWithRepetitions());
+        List<Product> expectedProducts = Arrays.asList(product1, product2);
+        Mockito.when(productService.getSortedProduct(Matchers.eq(Genre.ALTERNATIVE)))
+                .thenReturn(expectedProducts);
+
+        //action
+        List<Product> recommendedProducts = recommendationManager.recommendProductsByGenre(user, 2);
+
+        //assertion
+        Assertions.assertThat(recommendedProducts).hasSameElementsAs(expectedProducts);
     }
 }
