@@ -30,7 +30,7 @@ public class RecommendationService {
         //priorityQueue that will check which genre is user's favourite
         Queue<Tuple<Genre, Long>> genresQueue = fitProductsIntoPriorityQueue(orderHistory, distinctGenres);
 
-        return null;
+        return genresQueue.poll().getFirst();
     }
 
     protected Set<Genre> getDistinctGenres(List<Product> products) {

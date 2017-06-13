@@ -10,6 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import pkmhaijr.model.Tuple;
 import pkmhaijr.model.dbEntities.Product;
+import pkmhaijr.model.dbEntities.User;
 import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
 
@@ -88,5 +89,11 @@ public class RecommendationServiceTest {
         //assertion
         Assertions.assertThat(expectedQueue).hasSameElementsAs(actualQueue);
         Assertions.assertThat(expectedQueue).hasSameSizeAs(actualQueue);
+    }
+
+    @Test
+    public void findFavouriteGenre() {
+        //preparation
+        User user = new User();
     }
 }
