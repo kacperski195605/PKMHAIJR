@@ -48,4 +48,17 @@ public class Address {
     @Column
     @Size(min = 1, max = 10)
     private String postalCode;
+
+    public Address() {
+        this("", "", "", "", "", "");
+    }
+
+    public Address(String street, String country, String city, String houseNumber, String apartmentNumber, String postalCode) {
+        this.street = street;
+        this.country = country;
+        this.city = city;
+        this.houseNumber = houseNumber;
+        this.apartmentNumber = apartmentNumber;
+        this.postalCode = postalCode;
+    }
 }

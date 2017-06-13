@@ -41,5 +41,13 @@ public class Author implements Serializable, Cloneable {
         cloned.setId(id);
         return cloned;
     }
-    
+
+    public Author() {
+        this("", "");
+    }
+
+    public Author(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

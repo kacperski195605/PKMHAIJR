@@ -1,3 +1,5 @@
 language: java
 jdk:
   - oraclejdk8
+notifications:
+    slack: sixthterm:JYrwZ5it4gUhvOnkUOqHM0HI

@@ -4,9 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.stereotype.Service;
 import pkmhaijr.model.dbEntities.Product;
+import pkmhaijr.model.enums.FilterType;
+import pkmhaijr.model.enums.Genre;
 import pkmhaijr.repository.ProductRepository;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -61,5 +64,14 @@ public class ProductService {
     public Integer countProducts() {
         log.info("Returning number of products");
         return Math.toIntExact(productRepository.count());
+    }
+
+    public List<Product> getSortedProduct(String prefix){
+        return productRepository.findProducts(prefix);
+    }
+
+    public List<Product> getSortedProduct(Genre genre){
+        if(genre == Genre.ALL) return findAllProducts();
+        return productRepository.findByGenre(genre);
     }
 }

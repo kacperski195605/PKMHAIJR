@@ -3,6 +3,7 @@ package pkmhaijr.model.dbEntities;
 import lombok.Data;
 
 import javax.persistence.*;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -24,4 +25,13 @@ public class Wishlist {
             CascadeType.REFRESH
     }, fetch = FetchType.EAGER)
     private Set<Product> products;
+
+    public Wishlist(Set<Product> products) {
+        this.products = products;
+    }
+
+    public Wishlist() {
+        this(Collections.emptySet());
+    }
+
 }

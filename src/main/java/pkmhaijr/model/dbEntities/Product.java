@@ -54,6 +54,7 @@ public class Product implements Serializable, Cloneable {
 
     @NotNull
     @Column
+    @Enumerated(EnumType.STRING)
     private Genre genre;
 
     @ManyToOne

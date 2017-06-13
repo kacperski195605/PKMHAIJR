@@ -73,4 +73,16 @@ public class User {
 //        if (this$cards == null ? other$cards != null : !this$cards.equals(other$cards)) return false;
         return true;
     }
+
+    public User() {
+        this("", "", Collections.emptySet(), Collections.emptySet(), Collections.emptyList());
+    }
+
+    public User(String firstName, String lastName, Set<Address> addresses, Set<CreditCard> cards, List<Product> orderHistory) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.addresses = addresses;
+        this.cards = cards;
+        this.orderHistory = orderHistory;
+    }
 }

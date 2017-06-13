@@ -8,6 +8,7 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.Comparator.comparing;
@@ -16,7 +17,7 @@ import static java.util.Comparator.comparing;
  * Created by Asasello on 23-Apr-17.
  */
 public class ProductsSortingUtils {
-    public static ArrayList<Product> getSortedList(ArrayList<Product> productsList, SortingType sortingType) {
+    public static List<Product> getSortedList(List<Product> productsList, SortingType sortingType) {
         switch (sortingType) {
             case TITLE_ASCENDING:
                 return getSortedListByTitle(productsList,true);
@@ -39,7 +40,7 @@ public class ProductsSortingUtils {
         }
     }
 
-    private static ArrayList<Product> getSortedListByTitle(ArrayList<Product> productsList,boolean ascending){
+    private static ArrayList<Product> getSortedListByTitle(List<Product> productsList,boolean ascending){
        return ascending?productsList.stream().sorted(comparing(p -> p.getTitle().toLowerCase())).collect(Collectors.toCollection(ArrayList::new))
                :productsList.stream().sorted(comparing(p -> ((Product)p).getTitle().toLowerCase()).reversed()).collect(Collectors.toCollection(ArrayList::new));
     }
@@ -48,7 +49,7 @@ public class ProductsSortingUtils {
 ////        return ascending?productsList.stream().sorted(Comparator.comparing(Product::getReleaseDate)).collect(Collectors.toCollection(ArrayList::new)):productsList.stream().sorted(Comparator.comparing(Product::getReleaseDate).reversed()).collect(Collectors.toCollection(ArrayList::new));
 //        return productsList;
 //    }
-    private static ArrayList<Product> getSortedListByPrice(ArrayList<Product> productsList,boolean ascending){
+    private static ArrayList<Product> getSortedListByPrice(List<Product> productsList,boolean ascending){
         return ascending?productsList.stream().sorted(comparing(Product::getPrice)).collect(Collectors.toCollection(ArrayList::new)):productsList.stream().sorted(comparing(Product::getPrice).reversed()).collect(Collectors.toCollection(ArrayList::new));
     }
 

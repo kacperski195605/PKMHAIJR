@@ -9,6 +9,7 @@ import pkmhaijr.util.ProductsSortingUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 /**
@@ -56,7 +57,7 @@ public class ProductsSortingUtilsTest {
     @Test
     public void sortingProductsByPriceTest(){
         SortingType st = SortingType.PRICE_ASCENDING;
-        ArrayList<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsPrice, st);
+        List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsPrice, st);
         Product productBefore = sortedList.get(0);
         for (Product product : sortedList) {
             if(product.getPrice().doubleValue() < productBefore.getPrice().doubleValue()){
@@ -70,7 +71,7 @@ public class ProductsSortingUtilsTest {
     @Test
     public void sortingProductsByPriceTestDesc(){
         SortingType st = SortingType.PRICE_DESCENDING;
-        ArrayList<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsPrice, st);
+        List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsPrice, st);
         Product productBefore = sortedList.get(0);
         for (Product product : sortedList) {
             if(product.getPrice().doubleValue() > productBefore.getPrice().doubleValue()){
@@ -84,7 +85,7 @@ public class ProductsSortingUtilsTest {
     @Test
     public void sortingProductsByTitleAsc(){
         SortingType st = SortingType.TITLE_ASCENDING;
-        ArrayList<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsTitle, st);
+        List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsTitle, st);
         Product productBefore = sortedList.get(0);
         for (Product product : sortedList) {
             if(product.getTitle().compareToIgnoreCase(productBefore.getTitle()) < 0){
@@ -98,7 +99,7 @@ public class ProductsSortingUtilsTest {
     @Test
     public void sortingProductsByTitleDesc(){
         SortingType st = SortingType.TITLE_DESCENDING;
-        ArrayList<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsTitle, st);
+        List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsTitle, st);
         Product productBefore = sortedList.get(0);
         for (Product product : sortedList) {
             if(product.getTitle().compareToIgnoreCase(productBefore.getTitle()) > 0){
