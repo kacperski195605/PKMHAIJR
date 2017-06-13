@@ -31,7 +31,7 @@ public class Wishlist {
     }
 
     public Wishlist() {
-        this.products = Collections.emptySet();
+        this(Collections.emptySet());
     }
 
 }

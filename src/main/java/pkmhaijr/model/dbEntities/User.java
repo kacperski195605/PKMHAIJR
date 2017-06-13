@@ -72,12 +72,9 @@ public class User {
     }
 
     public User() {
-        this.firstName = "";
-        this.lastName = "";
-        this.addresses = Collections.emptySet();
-        this.cards = Collections.emptySet();
-        this.orderHistory = Collections.emptyList();
+        this("", "", Collections.emptySet(), Collections.emptySet(), Collections.emptyList());
     }
+
     public User(String firstName, String lastName, Set<Address> addresses, Set<CreditCard> cards, List<Product> orderHistory) {
         this.firstName = firstName;
         this.lastName = lastName;
