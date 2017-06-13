@@ -2,6 +2,7 @@ package pkmhaijr.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pkmhaijr.model.Tuple;
 import pkmhaijr.model.dbEntities.Product;
@@ -20,6 +21,9 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor(onConstructor = @__(@Inject))
 @Log4j2
 public class RecommendationService {
+
+    @Autowired
+    private ProductService productService;
 
     public Genre findFavouriteGenre(User user) {
         List<Product> orderHistory = user.getOrderHistory();

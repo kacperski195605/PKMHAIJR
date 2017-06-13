@@ -1,6 +1,7 @@
 package pkmhaijr.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,6 +15,8 @@ import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -38,6 +41,7 @@ public class ProductServiceTest {
     private Product product1;
     private Product product2;
     private Product product3;
+    private Product product4;
 
     @Before
     public void setUp() {
@@ -79,6 +83,9 @@ public class ProductServiceTest {
 //        author3.addProduct(product3);
         product3.setGenre(Genre.FOLK);
         product3.setType(ProductType.CD);
+
+        product4 = new Product(new BigDecimal("15.99"), "Title4", ProductType.CD, "Description4",
+                Genre.ALTERNATIVE, author1);
     }
 
     private void addAllProducts() {
@@ -89,6 +96,7 @@ public class ProductServiceTest {
         productService.addProduct(product1);
         productService.addProduct(product2);
         productService.addProduct(product3);
+        productService.addProduct(product4);
     }
 
     @Test
@@ -124,13 +132,13 @@ public class ProductServiceTest {
         log.info("Testing count of not empty database");
         //preparation
         addAllProducts();
-        int expectedCount = 3;
+        int expectedCount = 4;
 
         //action
         int actualCount = productService.countProducts();
 
         //assertion
-        assertEquals("Count should be equal to 3", expectedCount, actualCount);
+        assertEquals("Count should be equal to 4", expectedCount, actualCount);
     }
 
     @Test
@@ -138,18 +146,16 @@ public class ProductServiceTest {
         log.info("Testing finding all products");
         //preparation
         addAllProducts();
-        int expectedCount = 3;
+        int expectedCount = 4;
 
         //action
         List<Product> products = productService.findAllProducts();
 
         //assertion
         assertNotNull("List should not be null", products);
-        assertEquals("List should have a length of 3", expectedCount, products.size());
+        assertEquals("List should have a length of 4", expectedCount, products.size());
         //TODO: change these 3 into something nicer
-        assertTrue("List should contain address 1", products.contains(product1));
-        assertTrue("List should contain address 2", products.contains(product2));
-        assertTrue("List should contain address 3", products.contains(product3));
+        Assertions.assertThat(products).contains(product1, product2, product3);
     }
 
     @Test
@@ -212,6 +218,27 @@ public class ProductServiceTest {
 
         //assertion
         assertEquals("Count should be equal to 0", expectedCount, actualCount);
+    }
+
+    @Test
+    public void findByGenreTest() {
+        log.info("Testing finding list of products with specified genre");
+        //preparation
+        addAllProducts();
+        Genre firstGenre = Genre.ALTERNATIVE;
+        Genre secondGenre = Genre.BLUES;
+        List<Product> expected1 = Arrays.asList(product1, product4);
+        List<Product> expected2 = Collections.singletonList(product2);
+
+        //action
+        List<Product> actual1 = productService.getSortedProduct(firstGenre);
+        List<Product> actual2 = productService.getSortedProduct(secondGenre);
+
+        //assertion
+        Assertions.assertThat(expected1).hasSameElementsAs(actual1);
+        Assertions.assertThat(expected2).hasSameElementsAs(actual2);
+        Assertions.assertThat(expected1).hasSameSizeAs(actual1);
+        Assertions.assertThat(expected2).hasSameSizeAs(actual2);
     }
 
     @After

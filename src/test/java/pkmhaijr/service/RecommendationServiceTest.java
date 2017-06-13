@@ -94,6 +94,14 @@ public class RecommendationServiceTest {
     @Test
     public void findFavouriteGenre() {
         //preparation
-        User user = new User();
+        User user = new User("John", "Doe", Collections.emptySet(), Collections.emptySet(),
+                prepareOrderHistoryWithRepetitions());
+        Genre expectedGenre = Genre.ALTERNATIVE;
+
+        //action
+        Genre actualGenre = recommendationService.findFavouriteGenre(user);
+
+        //assertion
+        Assertions.assertThat(expectedGenre).isEqualTo(actualGenre);
     }
 }
