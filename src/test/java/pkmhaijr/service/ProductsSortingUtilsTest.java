@@ -1,6 +1,7 @@
 package pkmhaijr.service;
 
 import antlr.StringUtils;
+import org.assertj.core.api.Assertions;
 import org.junit.Before;
 import org.junit.Test;
 import pkmhaijr.model.dbEntities.Product;
@@ -9,6 +10,7 @@ import pkmhaijr.util.ProductsSortingUtils;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -17,7 +19,7 @@ import static org.junit.Assert.*;
  */
 
 public class ProductsSortingUtilsTest {
-    ArrayList<Product> listOfProductsPrice,listOfProductsTitle;
+    private ArrayList<Product> listOfProductsPrice, listOfProductsTitle;
 
     private Product getProduct(String price){
         Product product = new Product();
@@ -56,57 +58,53 @@ public class ProductsSortingUtilsTest {
     }
     @Test
     public void sortingProductsByPriceTest(){
+
+        //preparation
         SortingType st = SortingType.PRICE_ASCENDING;
+
+        //action
         List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsPrice, st);
-        Product productBefore = sortedList.get(0);
-        for (Product product : sortedList) {
-            if(product.getPrice().doubleValue() < productBefore.getPrice().doubleValue()){
-                assertFalse(true);
-            }
-            productBefore = product;
-        }
-        assertTrue(true);
+
+        //assertion
+        Assertions.assertThat(sortedList).isSortedAccordingTo(Comparator.comparing(Product::getPrice));
     }
 
     @Test
     public void sortingProductsByPriceTestDesc(){
+
+        //preparation
         SortingType st = SortingType.PRICE_DESCENDING;
+
+        //action
         List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsPrice, st);
-        Product productBefore = sortedList.get(0);
-        for (Product product : sortedList) {
-            if(product.getPrice().doubleValue() > productBefore.getPrice().doubleValue()){
-                assertFalse(true);
-            }
-            productBefore = product;
-        }
-        assertTrue(true);
+
+        //assertion
+        Assertions.assertThat(sortedList).isSortedAccordingTo((o1, o2) -> o2.getPrice().compareTo(o1.getPrice()));
     }
 
     @Test
     public void sortingProductsByTitleAsc(){
+
+        //preparation
         SortingType st = SortingType.TITLE_ASCENDING;
+
+        //action
         List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsTitle, st);
-        Product productBefore = sortedList.get(0);
-        for (Product product : sortedList) {
-            if(product.getTitle().compareToIgnoreCase(productBefore.getTitle()) < 0){
-                assertFalse(true);
-            }
-            productBefore = product;
-        }
-        assertTrue(true);
+
+        //assertion
+        Assertions.assertThat(sortedList).isSortedAccordingTo((o1, o2) -> o1.getTitle().compareToIgnoreCase(o2.getTitle()));
     }
 
     @Test
     public void sortingProductsByTitleDesc(){
+
+        //preparation
         SortingType st = SortingType.TITLE_DESCENDING;
+
+        //action
         List<Product> sortedList = ProductsSortingUtils.getSortedList(listOfProductsTitle, st);
-        Product productBefore = sortedList.get(0);
-        for (Product product : sortedList) {
-            if(product.getTitle().compareToIgnoreCase(productBefore.getTitle()) > 0){
-                assertFalse(true);
-            }
-            productBefore = product;
-        }
-        assertTrue(true);
+
+        //assertion
+        Assertions.assertThat(sortedList).isSortedAccordingTo((o1, o2) -> o2.getTitle().compareToIgnoreCase(o1.getTitle()));
     }
 }

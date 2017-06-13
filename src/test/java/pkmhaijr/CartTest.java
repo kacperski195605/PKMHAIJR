@@ -1,6 +1,8 @@
 package pkmhaijr;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
+import org.assertj.core.data.Offset;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,9 +32,9 @@ import static org.junit.Assert.*;
 @Log4j2
 public class CartTest {
     @Autowired
-    ProductService productService;
+    private ProductService productService;
     @Autowired
-    AuthorService authorService;
+    private AuthorService authorService;
     @Autowired
     private Cart mCart;
     private Product p1, p2;
@@ -67,8 +69,8 @@ public class CartTest {
         mCart.addToCart(p1);
         mCart.addToCart(p1);
         mCart.addToCart(p2);
-        assertEquals("Cart should contain 3 products", 3, mCart.getSize());
-        assertEquals(50.0, mCart.getPrice(), 0.09);
+        Assertions.assertThat(mCart.getSize()).isEqualTo(3);
+        Assertions.assertThat(mCart.getPrice()).isEqualTo(50.0, Offset.offset(0.09));
     }
 
     @Test
@@ -78,8 +80,8 @@ public class CartTest {
         mCart.addToCart(p2);
         mCart.getOutOfCart(p2);
         mCart.getOutOfCart(p2);
-        assertEquals("Cart should contain 2 products", 2, mCart.getSize());
-        assertEquals(20.0, mCart.getPrice(), 0.09);
+        Assertions.assertThat(mCart.getSize()).isEqualTo(2);
+        Assertions.assertThat(mCart.getPrice()).isEqualTo(20.0, Offset.offset(0.09));
     }
 
     @Test
@@ -88,8 +90,7 @@ public class CartTest {
         mCart.addToCart(p1);
         mCart.addToCart(p2);
         mCart.clearCart();
-        assertEquals("Cart should contain 0 products", 0, mCart.getSize());
-        assertEquals(0.0, mCart.getPrice(), 0.09);
-
+        Assertions.assertThat(mCart.getSize()).isEqualTo(0);
+        Assertions.assertThat(mCart.getPrice()).isEqualTo(0.0, Offset.offset(0.09));
     }
 }

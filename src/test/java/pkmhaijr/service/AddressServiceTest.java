@@ -1,8 +1,8 @@
 package pkmhaijr.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +13,8 @@ import pkmhaijr.model.dbEntities.Address;
 
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Created by patry on 24/04/17.
@@ -24,7 +25,8 @@ import static org.junit.Assert.*;
 @Log4j2
 public class AddressServiceTest {
 
-    @Autowired AddressService addressService;
+    @Autowired
+    private AddressService addressService;
 
     private Address address1;
     private Address address2;
@@ -75,8 +77,8 @@ public class AddressServiceTest {
         Address newAddress = addressService.findAddressById(address1.getId());
 
         //assertion
-        assertNotNull("Address should not be null", newAddress);
-        assertEquals("Addresses should be equal", address1, newAddress);
+        Assertions.assertThat(newAddress).isNotNull();
+        Assertions.assertThat(newAddress).isEqualTo(address1);
     }
 
     @Test
@@ -89,7 +91,7 @@ public class AddressServiceTest {
         int actualCount = addressService.countAddresses();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -103,7 +105,7 @@ public class AddressServiceTest {
         int actualCount = addressService.countAddresses();
 
         //assertion
-        assertEquals("Count should be equal to 3", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -117,12 +119,9 @@ public class AddressServiceTest {
         List<Address> addresses = addressService.findAllAddresses();
 
         //assertion
-        assertNotNull("List should not be null", addresses);
-        assertEquals("List should have a length of 3", expectedCount, addresses.size());
-        //TODO: change these 3 into something nicer
-        assertTrue("List should contain address 1", addresses.contains(address1));
-        assertTrue("List should contain address 2", addresses.contains(address2));
-        assertTrue("List should contain address 3", addresses.contains(address3));
+        Assertions.assertThat(addresses).isNotNull();
+        Assertions.assertThat(expectedCount).isEqualTo(addresses.size());
+        Assertions.assertThat(addresses).contains(address1, address2, address3);
     }
 
     @Test
@@ -138,8 +137,8 @@ public class AddressServiceTest {
         Address newAddress = addressService.findAddressById(address1.getId());
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-        assertNull("newAddress should be null", newAddress);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
+        Assertions.assertThat(newAddress).isNull();
     }
 
     @Test
@@ -154,19 +153,19 @@ public class AddressServiceTest {
         Address newAddress = addressService.findAddressById(address1.getId());
 
         //assertion
-        assertNotNull("New address should not be null", newAddress);
-        assertEquals("New address should have updated city field", address1.getCity(), newAddress.getCity());
+        Assertions.assertThat(newAddress).isNotNull();
+        Assertions.assertThat(address1.getCity()).isEqualTo(newAddress.getCity());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test()
     public void invalidUpdateAddress() {
         log.info("Testing invalid updating address");
         //preparation
         address1 = addressService.addAddress(address1);
         addressService.deleteAddress(address1);
 
-        //action
-        addressService.updateAddress(address1);
+        //assertion
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> addressService.updateAddress(address1));
     }
 
     @Test
@@ -181,7 +180,7 @@ public class AddressServiceTest {
         int actualCount = addressService.countAddresses();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @After

@@ -1,6 +1,8 @@
 package pkmhaijr.service;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +25,8 @@ import static org.junit.Assert.*;
 @Log4j2
 public class AuthorServiceTest {
 
-    @Autowired AuthorService authorService;
+    @Autowired
+    private AuthorService authorService;
 
     private Author author1;
     private Author author2;
@@ -60,8 +63,8 @@ public class AuthorServiceTest {
         Author newAuthor = authorService.findAuthorById(author1.getId());
 
         //assertion
-        assertNotNull("Author should not be null", newAuthor);
-        assertEquals("Authors should be equal", author1, newAuthor);
+        Assertions.assertThat(newAuthor).isNotNull();
+        Assertions.assertThat(newAuthor).isEqualTo(author1);
     }
 
     @Test
@@ -74,7 +77,7 @@ public class AuthorServiceTest {
         int actualCount = authorService.countAuthors();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -88,7 +91,7 @@ public class AuthorServiceTest {
         int actualCount = authorService.countAuthors();
 
         //assertion
-        assertEquals("Count should be equal to 3", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -102,12 +105,9 @@ public class AuthorServiceTest {
         List<Author> authors = authorService.findAllAuthors();
 
         //assertion
-        assertNotNull("List should not be null", authors);
-        assertEquals("List should have a length of 3", expectedCount, authors.size());
-        //TODO: change these 3 into something nicer
-        assertTrue("List should contain author 1", authors.contains(author1));
-        assertTrue("List should contain author 2", authors.contains(author2));
-        assertTrue("List should contain author 3", authors.contains(author3));
+        Assertions.assertThat(authors).isNotNull();
+        Assertions.assertThat(expectedCount).isEqualTo(authors.size());
+        Assertions.assertThat(authors).contains(author1, author2, author3);
     }
 
     @Test
@@ -123,8 +123,8 @@ public class AuthorServiceTest {
         Author newAuthor = authorService.findAuthorById(author1.getId());
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-        assertNull("newAuthor should be null", newAuthor);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
+        Assertions.assertThat(newAuthor).isNull();
     }
 
     @Test
@@ -139,19 +139,19 @@ public class AuthorServiceTest {
         Author newAuthor = authorService.findAuthorById(author1.getId());
 
         //assertion
-        assertNotNull("New author should not be null", newAuthor);
-        assertEquals("New author should have updated name field", author1.getName(), newAuthor.getName());
+        Assertions.assertThat(newAuthor).isNotNull();
+        Assertions.assertThat(author1.getName()).isEqualTo(newAuthor.getName());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidUpdateAuthor() {
         log.info("Testing invalid updating author");
         //preparation
         author1 = authorService.addAuthor(author1);
         authorService.deleteAuthor(author1);
 
-        //action
-        authorService.updateAuthor(author1);
+        //assertion
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> authorService.updateAuthor(author1));
     }
 
     @After

@@ -1,6 +1,7 @@
 package pkmhaijr.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -142,9 +143,7 @@ public class UserServiceTest {
         System.out.println(newUser);
         System.out.println(user1);
         //assertion
-//        assertTrue(newUser.equals(user1));
-//        assertNotNull("User should not be null", newUser);
-        assertEquals("User should be equal", user1, newUser);
+        Assertions.assertThat(user1).isEqualTo(newUser);
     }
 
     @Test
@@ -157,7 +156,7 @@ public class UserServiceTest {
         int actualCount = userService.countUsers();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Transactional
@@ -172,7 +171,7 @@ public class UserServiceTest {
         int actualCount = userService.countUsers();
 
         //assertion
-        assertEquals("Count should be equal to 3", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Transactional
@@ -187,12 +186,9 @@ public class UserServiceTest {
         List<User> users = userService.findAllUsers();
 
         //assertion
-        assertNotNull("List should not be null", users);
-        assertEquals("List should have a length of 3", expectedCount, users.size());
-
-        assertTrue("List should contain user 1", users.contains(user1));
-        assertTrue("List should contain user 2", users.contains(user2));
-        assertTrue("List should contain user 3", users.contains(user3));
+        Assertions.assertThat(users).isNotNull();
+        Assertions.assertThat(expectedCount).isEqualTo(users.size());
+        Assertions.assertThat(users).contains(user1, user2, user3);
     }
 
     @Test
@@ -208,8 +204,8 @@ public class UserServiceTest {
         User newUser = userService.findUserByd(user1.getId());
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-        assertNull("newUser should be null", newUser);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
+        Assertions.assertThat(newUser).isNull();
     }
 
     @Test
@@ -224,19 +220,19 @@ public class UserServiceTest {
         User newUser = userService.findUserByd(user1.getId());
 
         //assertion
-        assertNotNull("New user should not be null", newUser);
-        assertEquals("New user should have updated lastName field", user1.getLastName(), newUser.getLastName());
+        Assertions.assertThat(newUser).isNotNull();
+        Assertions.assertThat(user1.getLastName()).isEqualTo(newUser.getLastName());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidUpdateUser(){
         log.info("Testing invalid updating user");
         //preparation
         user1 = userService.addUser(user1);
         userService.deleteUser(user1);
 
-        //action
-        userService.updateUser(user1);
+        //assertion
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> userService.updateUser(user1));
     }
 
     @Transactional
@@ -252,7 +248,7 @@ public class UserServiceTest {
         int actualCount = userService.countUsers();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @After

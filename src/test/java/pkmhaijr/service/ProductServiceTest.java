@@ -110,8 +110,8 @@ public class ProductServiceTest {
         Product newProduct = productService.findProductById(product1.getId());
 
         //assertion
-        assertNotNull("Product should not be null", newProduct);
-        assertEquals("Products should be equal", product1, newProduct);
+        Assertions.assertThat(newProduct).isNotNull();
+        Assertions.assertThat(newProduct).isEqualTo(product1);
     }
 
     @Test
@@ -124,7 +124,7 @@ public class ProductServiceTest {
         int actualCount = productService.countProducts();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -138,7 +138,7 @@ public class ProductServiceTest {
         int actualCount = productService.countProducts();
 
         //assertion
-        assertEquals("Count should be equal to 4", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -152,9 +152,8 @@ public class ProductServiceTest {
         List<Product> products = productService.findAllProducts();
 
         //assertion
-        assertNotNull("List should not be null", products);
-        assertEquals("List should have a length of 4", expectedCount, products.size());
-        //TODO: change these 3 into something nicer
+        Assertions.assertThat(products).isNotNull();
+        Assertions.assertThat(expectedCount).isEqualTo(products.size());
         Assertions.assertThat(products).contains(product1, product2, product3);
     }
 
@@ -172,8 +171,8 @@ public class ProductServiceTest {
         Product newProduct = productService.findProductById(product1.getId());
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-        assertNull("newProduct should be null", newProduct);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
+        Assertions.assertThat(newProduct).isNull();
     }
 
     @Test
@@ -189,11 +188,11 @@ public class ProductServiceTest {
         Product newProduct = productService.findProductById(product1.getId());
 
         //assertion
-        assertNotNull("New product should not be null", newProduct);
-        assertEquals("New product should have updated title field", product1.getTitle(), newProduct.getTitle());
+        Assertions.assertThat(newProduct).isNotNull();
+        Assertions.assertThat(product1.getTitle()).isEqualTo(newProduct.getTitle());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidUpdateProduct() {
         log.info("Testing invalid updating product");
         //preparation
@@ -201,8 +200,8 @@ public class ProductServiceTest {
         product1 = productService.addProduct(product1);
         productService.deleteProduct(product1);
 
-        //action
-        productService.updateProduct(product1);
+        //assertion
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> productService.updateProduct(product1));
     }
 
     @Test
@@ -217,28 +216,7 @@ public class ProductServiceTest {
         int actualCount = productService.countProducts();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-    }
-
-    @Test
-    public void findByGenreTest() {
-        log.info("Testing finding list of products with specified genre");
-        //preparation
-        addAllProducts();
-        Genre firstGenre = Genre.ALTERNATIVE;
-        Genre secondGenre = Genre.BLUES;
-        List<Product> expected1 = Arrays.asList(product1, product4);
-        List<Product> expected2 = Collections.singletonList(product2);
-
-        //action
-        List<Product> actual1 = productService.getSortedProduct(firstGenre);
-        List<Product> actual2 = productService.getSortedProduct(secondGenre);
-
-        //assertion
-        Assertions.assertThat(expected1).hasSameElementsAs(actual1);
-        Assertions.assertThat(expected2).hasSameElementsAs(actual2);
-        Assertions.assertThat(expected1).hasSameSizeAs(actual1);
-        Assertions.assertThat(expected2).hasSameSizeAs(actual2);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @After

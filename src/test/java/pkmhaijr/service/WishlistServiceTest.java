@@ -1,6 +1,7 @@
 package pkmhaijr.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,9 +30,12 @@ import static org.junit.Assert.*;
 @Log4j2
 public class WishlistServiceTest {
 
-    @Autowired WishlistService wishlistService;
-    @Autowired ProductService productService;
-    @Autowired AuthorService authorService;
+    @Autowired
+    private WishlistService wishlistService;
+    @Autowired
+    private ProductService productService;
+    @Autowired
+    private AuthorService authorService;
 
     private Wishlist wishlist1;
     private Wishlist wishlist2;
@@ -119,8 +123,8 @@ public class WishlistServiceTest {
         Wishlist newWishlist = wishlistService.findWishlistById(wishlist1.getId());
 
         //assertion
-        assertNotNull("Wishlist should not be null", newWishlist);
-        assertEquals("Wishlists should be equal", wishlist1, newWishlist);
+        Assertions.assertThat(newWishlist).isNotNull();
+        Assertions.assertThat(wishlist1).isEqualTo(newWishlist);
     }
 
     @Test
@@ -133,7 +137,7 @@ public class WishlistServiceTest {
         int actualCount = wishlistService.countWishlists();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Transactional
@@ -148,7 +152,7 @@ public class WishlistServiceTest {
         int actualCount = wishlistService.countWishlists();
 
         //assertion
-        assertEquals("Count should be equal to 3", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Transactional
@@ -163,12 +167,9 @@ public class WishlistServiceTest {
         List<Wishlist> wishlists = wishlistService.findAllWishlists();
 
         //assertion
-        assertNotNull("List shoul not be null", wishlists);
-        assertEquals("List should have a lenght of 3", expectedCount, wishlists.size());
-        //TODO: change these 3 into something nicer
-        assertTrue("List should contain wishlist 1", wishlists.contains(wishlist1));
-        assertTrue("List should contain wishlist 2", wishlists.contains(wishlist2));
-        assertTrue("List should contain wishlist 3", wishlists.contains(wishlist3));
+        Assertions.assertThat(wishlists).isNotNull();
+        Assertions.assertThat(expectedCount).isEqualTo(wishlists.size());
+        Assertions.assertThat(wishlists).contains(wishlist1, wishlist2, wishlist3);
     }
 
     @Transactional
@@ -188,8 +189,8 @@ public class WishlistServiceTest {
         Wishlist newWishlist = wishlistService.findWishlistById(wishlist1.getId());
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-        assertNull("newWishlist should be null", newWishlist);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
+        Assertions.assertThat(newWishlist).isNull();
     }
 
     @Transactional
@@ -209,14 +210,13 @@ public class WishlistServiceTest {
         wishlistService.updateWishlist(wishlist1);
         Wishlist newWishlist = wishlistService.findWishlistById(wishlist1.getId());
 
-
         //assertion
-        assertNotNull("New wishlist should not be null", newWishlist);
-        assertEquals("New wishlist should have updated product set", wishlist1.getProducts(), newWishlist.getProducts());
+        Assertions.assertThat(newWishlist).isNotNull();
+        Assertions.assertThat(wishlist1.getProducts()).hasSameElementsAs(newWishlist.getProducts());
     }
 
     @Transactional
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidUpdateWishlist(){
         log.info("Testing invalid updating wishlist");
         //preparation
@@ -226,8 +226,8 @@ public class WishlistServiceTest {
         wishlist1 = wishlistService.addWishlist(wishlist1);
         wishlistService.deleteWishlist(wishlist1);
 
-        //action
-        wishlistService.updateWishlist(wishlist1);
+        //assertion
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> wishlistService.updateWishlist(wishlist1));
     }
 
     @Transactional
@@ -243,7 +243,7 @@ public class WishlistServiceTest {
         int actualCount = wishlistService.countWishlists();
 
         //assertion
-        assertEquals("Count should bre equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @After

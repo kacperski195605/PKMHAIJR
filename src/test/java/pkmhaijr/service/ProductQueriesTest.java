@@ -1,6 +1,7 @@
 package pkmhaijr.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,6 @@ import pkmhaijr.model.enums.Genre;
 import pkmhaijr.model.enums.ProductType;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
@@ -67,35 +67,35 @@ public class ProductQueriesTest {
     @Test
     public void productByGenreSearchTest_FOLK(){
         List<Product> sortedProductList = productService.getSortedProduct(Genre.FOLK);
-        assertNotNull("sortedProductList should not be null", sortedProductList);
-        assertEquals("sortedProductList should contain "+FolkCount+" products",FolkCount, sortedProductList.size());
+        Assertions.assertThat(sortedProductList).isNotNull();
+        Assertions.assertThat(FolkCount).isEqualTo(sortedProductList.size());
     }
 
     @Test
     public void productByGenreSearchTest_ALL(){
         List<Product> sortedProductList = productService.getSortedProduct(Genre.ALL);
-        assertNotNull("sortedProductList should not be null", sortedProductList);
-        assertEquals("sortedProductList should contain "+ALLCount+" products",ALLCount, sortedProductList.size());
+        Assertions.assertThat(sortedProductList).isNotNull();
+        Assertions.assertThat(ALLCount).isEqualTo(sortedProductList.size());
     }
 
     @Test
     public void productByGenreSearchTest_OTHER(){
         List<Product> sortedProductList = productService.getSortedProduct(Genre.POP);
-        assertNotNull("sortedProductList should not be null", sortedProductList);
-        assertEquals("sortedProductList should contain "+0+" products",0, sortedProductList.size());
+        Assertions.assertThat(sortedProductList).isNotNull();
+        Assertions.assertThat(sortedProductList.size()).isEqualTo(0);
     }
 
     @Test
     public void productByNameTestFirst(){
         List<Product> sortedProductList = productService.getSortedProduct("First");
-        assertNotNull("sortedProductList should not be null", sortedProductList);
-        assertEquals("sortedProductList should contain "+2+" products",2, sortedProductList.size());
+        Assertions.assertThat(sortedProductList).isNotNull();
+        Assertions.assertThat(sortedProductList.size()).isEqualTo(2);
     }
 
     @Test
     public void productByNameTestNE(){
         List<Product> sortedProductList = productService.getSortedProduct("NNNNNNNNNNN");
-        assertNotNull("sortedProductList should not be null", sortedProductList);
-        assertEquals("sortedProductList should contain "+0+" products",0, sortedProductList.size());
+        Assertions.assertThat(sortedProductList).isNotNull();
+        Assertions.assertThat(sortedProductList.size()).isEqualTo(0);
     }
 }

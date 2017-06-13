@@ -1,6 +1,7 @@
 package pkmhaijr.service;
 
 import lombok.extern.log4j.Log4j2;
+import org.assertj.core.api.Assertions;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,7 +24,8 @@ import static org.junit.Assert.*;
 @Log4j2
 public class CreditCardServiceTest {
 
-    @Autowired CreditCardService creditCardService;
+    @Autowired
+    private CreditCardService creditCardService;
 
     private CreditCard card1;
     private CreditCard card2;
@@ -60,8 +62,8 @@ public class CreditCardServiceTest {
         CreditCard newCard = creditCardService.findCreditCardById(card1.getId());
 
         //assertion
-        assertNotNull("Credit card should not be null", newCard);
-        assertEquals("Credit cards should be equal", card1, newCard);
+        Assertions.assertThat(newCard).isNotNull();
+        Assertions.assertThat(newCard).isEqualTo(card1);
     }
 
     @Test
@@ -74,7 +76,7 @@ public class CreditCardServiceTest {
         int actualCount = creditCardService.countCreditCards();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(actualCount).isEqualTo(expectedCount);
     }
 
     @Test
@@ -88,7 +90,7 @@ public class CreditCardServiceTest {
         int actualCount = creditCardService.countCreditCards();
 
         //assertion
-        assertEquals("Count should be equal to 3", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @Test
@@ -102,12 +104,9 @@ public class CreditCardServiceTest {
         List<CreditCard> cards = creditCardService.findAllCreditCards();
 
         //assertion
-        assertNotNull("List should not be null", cards);
-        assertEquals("List should have a length of 3", expectedCount, cards.size());
-        //TODO: change these 3 into something nicer
-        assertTrue("List should contain address 1", cards.contains(card1));
-        assertTrue("List should contain address 2", cards.contains(card2));
-        assertTrue("List should contain address 3", cards.contains(card3));
+        Assertions.assertThat(cards).isNotNull();
+        Assertions.assertThat(expectedCount).isEqualTo(cards.size());
+        Assertions.assertThat(cards).contains(card1, card2, card3);
     }
 
     @Test
@@ -123,8 +122,8 @@ public class CreditCardServiceTest {
         CreditCard newCard = creditCardService.findCreditCardById(card1.getId());
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
-        assertNull("newCard should be null", newCard);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
+        Assertions.assertThat(newCard).isNull();
     }
 
     @Test
@@ -139,11 +138,11 @@ public class CreditCardServiceTest {
         CreditCard newCard = creditCardService.findCreditCardById(card1.getId());
 
         //assertion
-        assertNotNull("New credit card should not be null", newCard);
-        assertEquals("New credit card should have updated owner field", card1.getOwner(), newCard.getOwner());
+        Assertions.assertThat(newCard).isNotNull();
+        Assertions.assertThat(card1.getOwner()).isEqualTo(newCard.getOwner());
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void invalidUpdateCreditCard() {
         log.info("Testing invalid updating credit card");
         //preparation
@@ -151,7 +150,7 @@ public class CreditCardServiceTest {
         creditCardService.deleteCreditCard(card1);
 
         //action
-        creditCardService.updateCreditCard(card1);
+        Assertions.assertThatIllegalArgumentException().isThrownBy(() -> creditCardService.updateCreditCard(card1));
     }
 
     @Test
@@ -166,7 +165,7 @@ public class CreditCardServiceTest {
         int actualCount = creditCardService.countCreditCards();
 
         //assertion
-        assertEquals("Count should be equal to 0", expectedCount, actualCount);
+        Assertions.assertThat(expectedCount).isEqualTo(actualCount);
     }
 
     @After
